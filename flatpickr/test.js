@@ -1,6 +1,6 @@
 import {view} from 'd3-view';
 
-import {test} from '../ci/utils.js';
+import {test} from '../.ci/utils.js';
 import {flatpickr} from '../index';
 
 

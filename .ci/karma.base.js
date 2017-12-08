@@ -1,4 +1,4 @@
-const modules = ['collapse', 'flatpickr'];
+const modules = require('./modules.js');
 
 
 const files = modules.map(function (m) {return './' + m + '/test.js';});

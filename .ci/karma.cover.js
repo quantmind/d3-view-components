@@ -23,15 +23,15 @@ module.exports = function (config) {
         reporters: ['progress', 'coverage'],
 
         preprocessors: {
-            './test/*.js': ['browserify'],
-            './src/**/*.js': ['browserify', 'coverage']
+            './**/*.js': ['browserify', 'coverage']
         },
 
         coverageReporter: {
+            dir: 'build/coverage/',
             reporters: [
-                { type: 'lcov', dir: 'coverage/', subdir: '.' },
-                { type: 'text-summary', dir: 'coverage/', subdir: '.' },
-                { type : 'html', dir : 'coverage/' }
+                {type: 'lcov', subdir: '.'},
+                {type: 'text-summary', subdir: '.'},
+                {type : 'html'}
             ]
         },
 
