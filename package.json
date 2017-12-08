@@ -72,7 +72,7 @@
         "test": "eslint index.js test src examples && npm run-script unit",
         "rollup": "rollup -c --banner \"$(preamble)\"",
         "dev": "rollup -c -w",
-        "build": "npm run-script rollup && uglifyjs --preamble \"$(preamble)\" build/d3-view-components.js -c -m -o build/d3-view-components.min.js",
+        "build": "npm run-script rollup && uglifyjs --preamble \"$(preamble)\" build/d3-view-components.js -c -m -o build/d3-view-components.min.js && node-sass index.scss build/d3-view-components.css --output-style compressed",
         "unit": "karma start .ci/karma.unit.js",
         "cover": "karma start .ci/karma.cover.js",
         "debug": "karma start .ci/karma.debug.js",

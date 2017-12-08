@@ -1,0 +1,8 @@
+.idea
+.circleci
+.ci
+*.log
+build
+rollup.config.js
+.eslintrc
+.gitignore

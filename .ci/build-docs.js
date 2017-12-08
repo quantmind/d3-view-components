@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+//
+//  Build d3-view-components documentation site
+//
+//  yarn docs
+//
 const fs = require('fs');
 const logger = require('console');
 const Handlebars = require('handlebars');
@@ -28,38 +33,30 @@ fs.readFile(templateFile, 'utf8', (err, source) => {
     const template = Handlebars.compile(source);
 
     // read pages
-    fs.readdir(pagesPath, (err, dirs) => {
+    [''].concat(components).forEach(name => {
+        let page = 'index',
+            title = '';
 
-        dirs.forEach(name => {
-            var index = name === 'readme.md' ? 'readme.md' : `${name}/readme.md`;
+        if (name) {
+            title = ' - ' + capFirst(name);
+            page = name;
+        }
 
-            if (fs.existsSync(index)) {
-                let title = '',
-                    page = 'index';
+        var outFile = `${sitePath}/${page}.html`,
+            contents = template({
+                version: version,
+                min: min,
+                title: pkg.title + title,
+                components: componentsInfo
+            });
 
-                if (name !== 'readme.md') {
-                    title = ' ' + capFirst(name);
-                    page = name;
-                }
-
-                var outFile = `${sitePath}/${page}.html`,
-                    contents = template({
-                        version: version,
-                        min: min,
-                        title: pkg.title + title,
-                        components: componentsInfo
-                    });
-
-                fs.writeFile(outFile, contents, err => {
-                    if (err) {
-                        logger.error(`Failed to write ${outFile}: ${err}`);
-                    } else {
-                        logger.info(`Created ${outFile}`);
-                    }
-                });
+        fs.writeFile(outFile, contents, err => {
+            if (err) {
+                logger.error(`Failed to write ${outFile}: ${err}`);
+            } else {
+                logger.info(`Created ${outFile}`);
             }
         });
-
     });
 
 });

@@ -23,7 +23,7 @@ module.exports = function (config) {
         reporters: ['progress', 'coverage'],
 
         preprocessors: {
-            './**/*.js': ['browserify', 'coverage']
+            './*/test.js': ['browserify', 'coverage']
         },
 
         coverageReporter: {
