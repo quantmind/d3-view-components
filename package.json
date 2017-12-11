@@ -25,6 +25,7 @@
     "jsnext:main": "index",
     "dependencies": {
         "d3-dispatch": "1.0",
+        "d3-ease": "1.0",
         "d3-selection": "1.2",
         "d3-transition": "1.1",
         "handlebars": "4",

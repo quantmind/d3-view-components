@@ -28,12 +28,16 @@ window.d3.require('d3-view-components', 'd3-view').then(d3 => {
             },
             components: {
                 flatpickr: d3.viewFlatpickr,
+                modal: d3.viewModal,
                 sidebar: d3.viewSidebar
             },
             directives: {
                 collapse: d3.viewCollapse,
+                modal: d3.viewModal.$directive
             }
         });
+
+        vm.model.$openModal = d3.viewModal.$openModal;
 
         var baseUrl = window.d3.resolve(basePath),
             router = new Navigo(baseUrl.substring(0, baseUrl.length-1));

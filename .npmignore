@@ -2,7 +2,10 @@
 .circleci
 .ci
 *.log
-build
+*.lock
 rollup.config.js
 .eslintrc
 .gitignore
+build/coverage
+build/docs.*
+site
