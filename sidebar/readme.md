@@ -2,11 +2,23 @@
 
 Usage:
 ```javascript
-import {viewSidebar} from 'd3-view-component';
+import {viewSidebar, viewCollapse} from 'd3-view-component';
 
 vm = view({
     components: {
         sidebar: viewSidebar
+    },
+    directives: {
+        collapse: viewCollapse
     }
 });
+```
+
+## Customization
+
+### sidebarToggle
+
+Set the sidebar toggle element which by default is
+```
+<i class="ion-android-menu"></i>
 ```

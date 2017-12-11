@@ -17,7 +17,7 @@ describe('Flatpickr -', () => {
     });
 
     test ('simple', async () => {
-        await vm.mount(vm.viewElement('<div><sidebar></sidebar></div>'))
+        await vm.mount(vm.viewElement('<div><sidebar></sidebar></div>'));
     });
 
 });

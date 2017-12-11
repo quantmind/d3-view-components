@@ -1,20 +1,21 @@
 import json from 'rollup-plugin-json';
 import babel from 'rollup-plugin-babel';
+import resolve from 'rollup-plugin-node-resolve';
 
 
 export default {
     input: '.ci/docs.js',
     output: {
         file: 'build/docs.js',
-        format: 'cjs'
+        format: 'iife'
     },
     plugins: [
         json(),
+        resolve(),
         babel({
             babelrc: false,
             plugins: ['external-helpers'],
-            presets: ['es2015-rollup'],
-            externalHelpers: true
+            presets: ['es2015-rollup']
         })
     ]
 };

@@ -13,7 +13,7 @@ describe('Flatpickr -', () => {
     });
 
     test ('simple', async () => {
-        await vm.mount(vm.viewElement('<div></flatpickr></flatpickr></div>'))
+        await vm.mount(vm.viewElement('<div></flatpickr></flatpickr></div>'));
     });
 
 });

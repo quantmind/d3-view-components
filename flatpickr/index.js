@@ -2,12 +2,17 @@ import {viewProviders} from 'd3-view';
 
 
 export default {
+    props: {
+        options: {}
+    },
 
-    render (options) {
+    render (props) {
+        var self = this;
         return viewProviders.require('flatpickr').then(flatpickr => {
-            var el = this.viewElement('<input type="text">');
-            this.fp = flatpickr(el.node(), options);
+            var el = self.viewElement('<input type="text">');
+            this.fp = flatpickr(el, props.options);
             return el;
         });
     }
 };
+

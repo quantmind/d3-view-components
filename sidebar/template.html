@@ -5,10 +5,11 @@
       <a d3-for="item in primaryItems"
         class="list-group-item list-group-item-action"
         d3-attr-href="item.url"
-        d3-append="item.label || item.name"
         d3-active='currentUrl'
         {{ itemAttr }}>
-        <i d3-class="item.icon" aria-hidden="true"></i></a>
+        <i d3-class="item.icon" aria-hidden="true"></i>
+        <span d3-html="item.label || item.name"></span>
+      </a>
     </div>
     <div class="list-group bottom">
       <a d3-for="item in secondaryItems"
@@ -20,14 +21,14 @@
       </a>
     </div>
   </div>
-  <div class="content-wrapper" d3-append-div="sidebarContent">
+  <div class="content-wrapper">
     <nav class="{{ classes }}">
       <a class="navbar-toggler btn btn-default mr-1" href="#"
         aria-controls="{{ id }}"
         aria-expanded="true"
         aria-label="toggle sidebar"
-        d3-if="sideToggle"
-        d3-html="sideToggle"
+        d3-if="sidebarToggle"
+        d3-html="sidebarToggle"
         d3-collapse></a>
       <a class="navbar-brand mr-auto"
         d3-if="brand"
@@ -44,5 +45,7 @@
         </li>
       </ul>
     </nav>
+    <div class="content-main" d3-html="sidebarContent">
+    </div>
   </div>
 </div>
