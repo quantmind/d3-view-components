@@ -23,8 +23,7 @@ export default {
         babel({
             babelrc: false,
             plugins: ['external-helpers'],
-            presets: ['es2015-rollup'],
-            externalHelpers: true
+            presets: ['es2015-rollup']
         }),
         sourcemaps()
     ]

@@ -6,9 +6,10 @@ Use the modal component to add dialogs to your site for lightboxes, user notific
 
 To use the modal you need to include the modal component and a directive:
 ```javascript
+import {view} from 'd3-view';
 import {viewModal} from 'd3-view-component';
 
-vm = view({
+var vm = view({
     components: {
         modal: viewModal
     }
@@ -25,8 +26,7 @@ custom options.
 
 A simple dialog
 ```html
-<button class="btn btn-primary" d3-on='$openModal({title: "Simple"})'><button>
+<button class="btn btn-primary" d3-on='$openModal("#simple-modal")'><button>
 ```
-<script></script>
-<button class="btn btn-primary" d3-on="$openModal()">Open modal</button>
+<button class="btn btn-primary" d3-on="$openModal('#simple-modal')">Open modal</button>
 <br>

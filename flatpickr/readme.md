@@ -8,6 +8,9 @@ import {viewFlatpickr} from 'd3-view-component';
 vm = view({
     components: {
         flatpickr: viewFlatpickr
+    },
+    directive: {
+        flatpickr: viewFlatpickr.$directive
     }
 });
 ```
@@ -18,7 +21,7 @@ vm = view({
 <flatpickr></flatpickr>
 ```
 <flatpickr></flatpickr>
-<br>
+<br><br>
 
 #### With time
 
@@ -26,7 +29,28 @@ vm = view({
 <flatpickr options='{"enableTime": true}'></flatpickr>
 ```
 <flatpickr options='{"enableTime": true}'></flatpickr>
-<br>
+<br><br>
+
+#### In a form
+
+It is easy to include a date picker in a form
+
+```html
+<d3form schema='/flatpickr/form-example.json'></d3form>
+```
+<div class="container-float">
+    <form-data class="row">
+        <div class="col-sm-6">
+            <d3form schema='/flatpickr/form-example.json'></d3form>
+        </div>
+        <div class="col-sm-6">
+            <div d3-marked="formData"></div>
+        </div>
+    </form-data>
+</div>
+<br><br>
+
 
 [d3-view]: https://github.com/quantmind/d3-view
 [flatpickr]: https://chmln.github.io/flatpickr/
+

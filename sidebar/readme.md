@@ -19,6 +19,6 @@ vm = view({
 ### sidebarToggle
 
 Set the sidebar toggle element which by default is
-```
+```html
 <i class="ion-android-menu"></i>
 ```
