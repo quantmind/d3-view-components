@@ -11,10 +11,11 @@ describe('viewMarked -', () => {
 
     beforeEach(() => {
         vm = view({components: {modal: viewModal}});
+        vm.$openModal = viewModal.$openModal;
     });
 
     test ('simple', async () => {
-        expect(isFunction(viewModal.$openModal)).toBe(true);
+        expect(isFunction(vm.$openModal)).toBe(true);
     });
 
 });

@@ -30,7 +30,7 @@
         "d3-transition": "1.1",
         "d3-view": "1.1",
         "handlebars": "4.0",
-        "marked": "0.3"
+        "marked": "0.3.7"
     },
     "devDependencies": {
         "babel-core": "6.26",
@@ -71,7 +71,7 @@
         "whatwg-fetch": "2.0"
     },
     "scripts": {
-        "lint": "eslint index.js .ci/*.js .ci/**/*.js collapse/*.js flatpickr/*.js sidebar/*.js --no-ignore",
+        "lint": "eslint index.js .ci/*.js .ci/**/*.js collapse/*.js flatpickr/*.js marked/*.js modal/*.js sidebar/*.js --no-ignore",
         "test": "eslint index.js test src examples && npm run-script unit",
         "rollup": "rollup -c --banner \"$(preamble)\"",
         "dev": "rollup -c -w",

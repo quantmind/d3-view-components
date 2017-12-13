@@ -2,6 +2,7 @@ import {viewProviders} from 'd3-view';
 
 
 export default {
+
     refresh (model, options) {
         var self = this,
             opts = options && options.$data ? options.$data() : {};

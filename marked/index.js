@@ -5,10 +5,10 @@ export default {
 
     refresh (model, doc) {
         var self = this,
-            require = viewProviders.require,
+            r = viewProviders.require,
             marked, hl;
 
-        Promise.all([require('marked'), require('highlightjs')]).then(libs => {
+        Promise.all([r('marked'), r('highlightjs')]).then(libs => {
             [marked, hl] = libs;
             marked.setOptions({
                 highlight,
