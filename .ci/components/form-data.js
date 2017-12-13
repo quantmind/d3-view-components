@@ -18,6 +18,6 @@ export default {
         Object.keys(attrs).forEach(attr => {
             el.attr(attr, attrs[attr]);
         });
-        return el
+        return el;
     }
 };

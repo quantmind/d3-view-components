@@ -1,6 +1,6 @@
 export {version as viewComponentsVersion} from './package.json';
 export {default as viewFlatpickr} from './flatpickr/index';
-export {default as viewMarked} from './marked/index';
+//export {default as viewMarked} from './marked/index';
 export {default as viewModal} from './modal/index';
 export {default as viewCollapse} from './collapse/index';
 export {default as viewSidebar} from './sidebar/index';

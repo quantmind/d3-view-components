@@ -1,7 +1,7 @@
 import {view} from 'd3-view';
 
 import {test} from '../.ci/utils.js';
-import {collapse} from '../index';
+import {viewCollapse} from '../index';
 
 
 describe('Collapse -', () => {
@@ -9,7 +9,7 @@ describe('Collapse -', () => {
     let vm;
 
     beforeEach(() => {
-        vm = view({directives: {collapse: collapse}});
+        vm = view({directives: {collapse: viewCollapse}});
     });
 
     test ('simple', async () => {
