@@ -1,6 +1,16 @@
 export default {
     model: {
         formData: '',
+        $formFieldChange (field) {
+            var data = field.form.$inputData(),
+                mkd = [
+                    "#### Form inputs",
+                    "```json",
+                    JSON.stringify(data, null, '    '),
+                    "```"
+                ];
+            this.formData = mkd.join('\n');
+        }
     },
 
     render (props, attrs, ol) {

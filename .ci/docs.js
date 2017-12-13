@@ -26,7 +26,6 @@ window.d3.require('d3-view-components', 'd3-view').then(d3 => {
             docs: ''
         },
         components: {
-            flatpickr: d3.viewFlatpickr,
             modal: d3.viewModal,
             sidebar: d3.viewSidebar,
             // site specific
@@ -34,7 +33,7 @@ window.d3.require('d3-view-components', 'd3-view').then(d3 => {
         },
         directives: {
             collapse: d3.viewCollapse,
-            flatpickr: d3.viewFlatpickr.$directive,
+            flatpickr: d3.viewFlatpickr,
             marked: d3.viewMarked,
             modal: d3.viewModal.$directive
         }

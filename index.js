@@ -9,4 +9,4 @@ import 'd3-transition';
 import Handlebars from 'handlebars';
 import {viewProviders} from 'd3-view';
 
-viewProviders.compileHtml = Handlebars.compile;
+viewProviders.compileTemplate = Handlebars.compile;
