@@ -23,7 +23,8 @@ function capFirst(text) {
 }
 
 // symlink to d3-view (for development)
-fs.ensureSymlink('../node_modules/d3-view/build/d3-view.js', `${sitePath}/d3-view.js`);
+if (!min)
+    fs.ensureSymlink('../node_modules/d3-view/build/d3-view.js', `${sitePath}/d3-view.js`);
 
 
 // read template
