@@ -1618,7 +1618,7 @@ return Promise$3;
   }
   self.fetch.polyfill = true
 })(typeof self !== 'undefined' ? self : this);
-// d3-view Version 1.1.1. Copyright 2017 quantmind.com.
+// d3-view Version 1.1.2. Copyright 2017 quantmind.com.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -1635,19 +1635,24 @@ var hasOwnProperty = queue.hasOwnProperty;
 
 
 function requireFrom(resolver) {
-  var modules = new Map, require = requireRelative(null);
+  var modules = new Map(),
+      require = requireRelative(null);
 
   function requireRelative(base) {
-    return function(name) {
-      var url = resolver(name + "", base), module = modules.get(url);
-      if (!module) modules.set(url, module = new Promise(function(resolve, reject) {
+    return function (name) {
+      var url = resolver(name + "", base),
+          module = modules.get(url);
+      if (!module) modules.set(url, module = new Promise(function (resolve, reject) {
         var script = document.createElement("script");
-        script.onload = function() {
-          try { resolve(queue.pop()(requireRelative(url.replace(/\/[^/]*$/, "/")))); }
-          catch (error) { reject(new Error("invalid module")); }
+        script.onload = function () {
+          try {
+            resolve(queue.pop()(requireRelative(url.replace(/\/[^/]*$/, "/"))));
+          } catch (error) {
+            reject(new Error("invalid module"));
+          }
           script.remove();
         };
-        script.onerror = function() {
+        script.onerror = function () {
           reject(new Error("unable to load module"));
           script.remove();
         };
@@ -1660,18 +1665,21 @@ function requireFrom(resolver) {
     };
   }
 
-  return function(name) {
+  return function (name) {
     return arguments.length > 1 ? Promise.all(map.call(arguments, require)).then(merge) : require(name);
   };
 }
 
 function merge(modules) {
-  var o = {}, i = -1, n = modules.length, m, k;
+  var o = {},
+      i = -1,
+      n = modules.length,
+      m,
+      k;
   while (++i < n) {
-    for (k in (m = modules[i])) {
+    for (k in m = modules[i]) {
       if (hasOwnProperty.call(m, k)) {
-        if (m[k] == null) Object.defineProperty(o, k, {get: getter(m, k)});
-        else o[k] = m[k];
+        if (m[k] == null) Object.defineProperty(o, k, { get: getter(m, k) });else o[k] = m[k];
       }
     }
   }
@@ -1679,26 +1687,28 @@ function merge(modules) {
 }
 
 function getter(object, name) {
-  return function() { return object[name]; };
+  return function () {
+    return object[name];
+  };
 }
 
 function isexports(name) {
-  return (name + "") === "exports";
+  return name + "" === "exports";
 }
 
 function define(name, dependencies, factory) {
   if (arguments.length < 3) factory = dependencies, dependencies = name;
   if (arguments.length < 2) factory = dependencies, dependencies = [];
-  queue.push(some.call(dependencies, isexports) ? function(require) {
+  queue.push(some.call(dependencies, isexports) ? function (require) {
     var exports = {};
-    return Promise.all(map.call(dependencies, function(name) {
+    return Promise.all(map.call(dependencies, function (name) {
       return isexports(name += "") ? exports : require(name);
-    })).then(function(dependencies) {
+    })).then(function (dependencies) {
       factory.apply(null, dependencies);
       return exports;
     });
-  } : function(require) {
-    return Promise.all(map.call(dependencies, require)).then(function(dependencies) {
+  } : function (require) {
+    return Promise.all(map.call(dependencies, require)).then(function (dependencies) {
       return typeof factory === "function" ? factory.apply(null, dependencies) : factory;
     });
   });
@@ -1708,15 +1718,13 @@ define.amd = {};
 
 var isAbsolute = new RegExp('^([a-z]+://|//)');
 var isRelative = new RegExp('^[.]{0,2}/');
-var libs = new Map;
+var libs = new Map();
 
-
-const viewRequire = requireWithLibs();
-
+var viewRequire = requireWithLibs();
 
 
 
-function viewResolve (name, options) {
+function viewResolve(name, options) {
     var dist = libs.get(name),
         main = name,
         path = null,
@@ -1730,16 +1738,11 @@ function viewResolve (name, options) {
     if (dist) {
         path = path || dist.main;
         main = removeBackSlash(dist.origin || main);
-        if (dist.version)
-            main = `${name}@${dist.version}`;
-        if (path)
-            main = `${main}/${path}`;
+        if (dist.version) main = name + '@' + dist.version;
+        if (path) main = main + '/' + path;
     } else if (path) {
-        if (isAbsolute.test(main))
-            main = new URL(main, base).origin;
-        else if (isRelative.test(main))
-            main = '';
-        main = `${main}/${path}`;
+        if (isAbsolute.test(main)) main = new URL(main, base).origin;else if (isRelative.test(main)) main = '';
+        main = main + '/' + path;
     }
 
     if (isAbsolute.test(main)) {
@@ -1752,22 +1755,19 @@ function viewResolve (name, options) {
     }
 }
 
-
-function requireWithLibs () {
+function requireWithLibs() {
     var r = requireFrom(viewResolve);
     r.libs = libs;
     return r;
 }
 
-
-function removeFrontSlash (path) {
+function removeFrontSlash(path) {
     if (typeof path === 'string' && path.substring(0, 1) === '/') path = path.substring(1);
     return path;
 }
 
-
-function removeBackSlash (path) {
-    if (typeof path === 'string' && path.substring(path.length-1) === '/') path = path.substring(0, path.substring);
+function removeBackSlash(path) {
+    if (typeof path === 'string' && path.substring(path.length - 1) === '/') path = path.substring(0, path.substring);
     return path;
 }
 
@@ -1808,7 +1808,7 @@ var dependencies = {
         "main": "build/d3-transition.js"
     },
     "d3-view": {
-        "version": "1.1.1",
+        "version": "1.1.2",
         "main": "build/d3-view.js"
     },
     "d3-color": {
