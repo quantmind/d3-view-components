@@ -12,7 +12,7 @@ fs.readdirSync('.').forEach(name => {
         target = name;
         name = name === 'readme.md' ? 'index' : name.substring(0, n);
         pages[target] = name;
-    } else {
+    } else if (name !== 'build') {
         target = './' + name + '/readme.md';
         if (fs.existsSync(target)) {
             components.push(name);

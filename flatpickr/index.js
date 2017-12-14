@@ -11,6 +11,7 @@ export default {
             if (self.fp) self.fp.destroy();
             self.sel.on('input', null);
             self.sel.on('change', null);
+            model.$emit('flatpickr', opts);
             self.fp = flatpickr(self.el, opts);
         });
     },

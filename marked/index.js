@@ -14,7 +14,8 @@ export default {
                 highlight,
                 langPrefix: "hljs "
             });
-            self.sel.html(marked(doc));
+            self.sel.html(doc ? marked(doc) : '');
+            model.$emit('markedElement', self.el);
             self.selectChildren().mount();
         });
 

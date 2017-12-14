@@ -1,7 +1,9 @@
-const modules = require('./modules.js').components;
+const components = require('./modules.js').components;
 
 
-const files = modules.map(function (m) {return './' + m + '/test.js';});
+const
+    tests = components.map(function (m) {return './' + m + '/test.js';}),
+    html = components.map(function (m) {return './' + m + '/*.html';});
 
 
 module.exports = {
@@ -14,10 +16,10 @@ module.exports = {
     files: [
         './node_modules/babel-polyfill/dist/polyfill.js',
         './node_modules/whatwg-fetch/fetch.js',
-    ].concat(files),
+    ].concat(tests).concat(html),
 
-    preprocessors: files.reduce(function (p, file) {
-        p[file] = ['browserify'];
+    preprocessors: components.reduce(function (p, name) {
+        p['./' + name + '/test.js'] = ['browserify'];
         return p;
     }, {}),
 

@@ -3,3 +3,6 @@
 /build
 /dist
 /site
+
+# files
+.DS_Store

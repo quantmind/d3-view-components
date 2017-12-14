@@ -1,7 +1,7 @@
 import {view} from 'd3-view';
 
 import {test} from '../.ci/utils.js';
-import {viewSidebar} from '../index';
+import {viewSidebar, viewCollapse} from '../index';
 
 
 describe('Flatpickr -', () => {
@@ -12,6 +12,9 @@ describe('Flatpickr -', () => {
         vm = view({
             components: {
                 sidebar: viewSidebar
+            },
+            directives: {
+                collapse: viewCollapse
             }
         });
     });
