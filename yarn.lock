@@ -1577,9 +1577,9 @@ d3-transition@1.1:
     d3-selection "^1.1.0"
     d3-timer "1"
 
-d3-view@1.1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/d3-view/-/d3-view-1.1.0.tgz#2321b9d45a33cc6eaf3d2ad509dc627088d09a72"
+d3-view@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/d3-view/-/d3-view-1.1.1.tgz#3bb16fe0104f957117f5c56fae275e41b8aeea0c"
   dependencies:
     d3-collection "1.0"
     d3-dispatch "1.0"

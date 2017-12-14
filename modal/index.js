@@ -1,5 +1,7 @@
 import {select} from 'd3-selection';
 import {easeExpOut} from 'd3-ease';
+import {isString} from 'd3-let';
+import {viewWarn} from 'd3-view';
 
 
 export default {
@@ -43,6 +45,7 @@ export default {
     // function for opening a modal
     // inject this method to the root model
     $openModal (options) {
+        if (isString(options)) options = optionsFromTarget(options);
         var modal = select('#d3-view-modal');
         if (!modal.size())
             select('body').append('modal').mount(options, v => v.model.$showModal());
@@ -82,3 +85,22 @@ export default {
         }
     }
 };
+
+
+function optionsFromTarget (selector) {
+    var sel = select(selector);
+    if (sel.size() === 1) {
+        return {
+            modalTitle: textFromTarget(sel.select('modal-title')),
+            modalBody: textFromTarget(sel.select('modal-body'))
+        };
+    } else {
+        viewWarn(`Could not obtain target from selector "${selector}"`);
+        return {};
+    }
+}
+
+function textFromTarget (sel) {
+    if (sel.size()) return sel.html();
+    return '';
+}

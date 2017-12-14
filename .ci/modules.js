@@ -11,12 +11,15 @@ fs.readdirSync('.').forEach(name => {
     if (name.substring(n) === '.md') {
         target = name;
         name = name === 'readme.md' ? 'index' : name.substring(0, n);
-        pages[target] = name;
+        pages[target] = {name: name};
     } else if (name !== 'build') {
         target = './' + name + '/readme.md';
         if (fs.existsSync(target)) {
             components.push(name);
-            pages[name] = name;
+            pages[name] = {
+                name: name,
+                html: `${name}/index`
+            };
         }
     }
 });

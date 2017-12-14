@@ -37,17 +37,20 @@ fs.readFile(templateFile, 'utf8', (err, source) => {
     const template = Handlebars.compile(source);
 
     // read pages
-    Object.keys(modules.pages).forEach(path => {
-        let name = modules.pages[path],
+    Object.keys(modules.pages).forEach(src => {
+        let obj = modules.pages[src],
+            name = obj.name,
+            html = obj.html || name,
+            raw = `${sitePath}/${src}`,
             title = '';
 
-        if (name !== 'index') title = ' - ' + capFirst(name);
+        if (html !== 'index') title = ' - ' + capFirst(name);
 
         // copy raw file/directory
-        fs.copySync(path, `${sitePath}/${path}`);
+        fs.copySync(src, raw);
 
         // create the html page
-        var outFile = `${sitePath}/${name}.html`,
+        var outFile = `${sitePath}/${html}.html`,
             contents = template({
                 version: version,
                 min: min,
