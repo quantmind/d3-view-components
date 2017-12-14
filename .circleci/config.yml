@@ -42,8 +42,9 @@ jobs:
               name: release
               command: npm run-script release
     site:
+      working_directory: ~/website
       docker:
-        - image: circleci/node:latest-browsers
+        - image: circleci/node
       steps:
         - checkout
         - run:
