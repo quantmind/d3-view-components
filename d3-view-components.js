@@ -1,9 +1,9 @@
 // d3-view-components Version 0.0.1. Copyright 2017 quantmind.com.
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-view'), require('d3-selection'), require('d3-ease'), require('d3-dispatch'), require('d3-transition'), require('handlebars')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'd3-view', 'd3-selection', 'd3-ease', 'd3-dispatch', 'd3-transition', 'handlebars'], factory) :
-	(factory((global.d3 = global.d3 || {}),global.d3,global.d3,global.d3,global.d3,global.d3,global.d3));
-}(this, (function (exports,d3View,d3Selection,d3Ease,d3Dispatch,d3Transition,Handlebars) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-view'), require('d3-selection'), require('d3-ease'), require('d3-let'), require('d3-dispatch'), require('d3-transition'), require('handlebars')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'd3-view', 'd3-selection', 'd3-ease', 'd3-let', 'd3-dispatch', 'd3-transition', 'handlebars'], factory) :
+	(factory((global.d3 = global.d3 || {}),global.d3,global.d3,global.d3,global.d3,global.d3,global.d3,global.d3));
+}(this, (function (exports,d3View,d3Selection,d3Ease,d3Let,d3Dispatch,d3Transition,Handlebars) { 'use strict';
 
 Handlebars = Handlebars && Handlebars.hasOwnProperty('default') ? Handlebars['default'] : Handlebars;
 
@@ -135,6 +135,7 @@ var index$2 = {
     // function for opening a modal
     // inject this method to the root model
     $openModal: function $openModal(options) {
+        if (d3Let.isString(options)) options = optionsFromTarget(options);
         var modal = d3Selection.select('#d3-view-modal');
         if (!modal.size()) d3Selection.select('body').append('modal').mount(options, function (v) {
             return v.model.$showModal();
@@ -172,6 +173,24 @@ var index$2 = {
         }
     }
 };
+
+function optionsFromTarget(selector) {
+    var sel = d3Selection.select(selector);
+    if (sel.size() === 1) {
+        return {
+            modalTitle: textFromTarget(sel.select('modal-title')),
+            modalBody: textFromTarget(sel.select('modal-body'))
+        };
+    } else {
+        d3View.viewWarn('Could not obtain target from selector "' + selector + '"');
+        return {};
+    }
+}
+
+function textFromTarget(sel) {
+    if (sel.size()) return sel.html();
+    return '';
+}
 
 var COLLAPSE = 'collapse';
 var COLLAPSING = 'd3-collapsing';

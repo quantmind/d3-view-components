@@ -1795,6 +1795,10 @@ var dependencies = {
         "version": "1.0",
         "main": "build/d3-ease.js"
     },
+    "d3-let": {
+        "version": "0.3",
+        "main": "build/d3-let.js"
+    },
     "d3-selection": {
         "version": "1.2",
         "main": "build/d3-selection.js"
@@ -1822,10 +1826,6 @@ var dependencies = {
     "d3-collection": {
         "version": "1.0",
         "main": "build/d3-collection.js"
-    },
-    "d3-let": {
-        "version": "0.3",
-        "main": "build/d3-let.js"
     }
 };
 Object.keys(dependencies).forEach(function (name) {
