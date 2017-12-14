@@ -55,6 +55,9 @@ jobs:
         - run:
             name: authenticate bot
             command: ./.circleci/authenticate.sh
+        - run:
+            name: publish site
+            command: ./.circleci/publish.sh
 
 
 workflows:
