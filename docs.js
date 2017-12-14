@@ -1618,7 +1618,7 @@ return Promise$3;
   }
   self.fetch.polyfill = true
 })(typeof self !== 'undefined' ? self : this);
-// d3-view Version 1.1.2. Copyright 2017 quantmind.com.
+// d3-view Version 1.1.3. Copyright 2017 quantmind.com.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -1808,7 +1808,7 @@ var dependencies = {
         "main": "build/d3-transition.js"
     },
     "d3-view": {
-        "version": "1.1.2",
+        "version": "1.1.3",
         "main": "build/d3-view.js"
     },
     "d3-color": {
@@ -2381,6 +2381,14 @@ var formData = {
     }
 };
 
+var sitePlugin = {
+    install: function install(vm) {
+        vm.addComponent('form-data', formData);
+    }
+};
+
+var version = "0.0.2";
+
 var basePath = '/';
 
 if (window.development) {
@@ -2395,23 +2403,27 @@ window.d3.require('d3-view-components', 'd3-view').then(function (d3) {
 
     var vm = d3.view({
         model: {
-            docs: ''
+            docs: '',
+            navbarItems: [{
+                icon: 'ion-social-github',
+                href: 'https://github.com/quantmind/d3-view-components',
+                label: 'v' + version
+            }]
         },
         components: {
             modal: d3.viewModal,
             sidebar: d3.viewSidebar,
-            // site specific
-            'form-data': formData
+            tabs: d3.viewTabs
         },
         directives: {
+            active: d3.viewActive,
             collapse: d3.viewCollapse,
             flatpickr: d3.viewFlatpickr,
             marked: d3.viewMarked,
             modal: d3.viewModal.$directive
         }
-    });
+    }).use(sitePlugin).use(d3.viewForms).use(d3.viewBootstrapForms);
 
-    vm.use(d3.viewForms).use(d3.viewBootstrapForms);
     vm.model.$openModal = d3.viewModal.$openModal;
 
     var baseUrl = window.d3.resolve(basePath),

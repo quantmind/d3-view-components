@@ -16,9 +16,24 @@ vm = view({
 
 ## Customization
 
-### sidebarToggle
+The sidebar can be customized via several reactive properties.
 
-Set the sidebar toggle element which by default is
-```html
-<i class="ion-android-menu"></i>
+* ``primaryItems``: list of [navigation items][] located in the sidebar
+* ``secondaryItems``: list of [navigation items][] located in the sidebar, below the ``primaryItems``
+* ``navbarItems``: list of [navigation items][] located in the top navbar
+* ``sidebarToggle``: the sidebar toggle element which by default is ```<i class="ion-android-menu"></i>```
+
+## Navigation item
+
+A navigation item can be a string or an object.
+If a string it is converted into an object with name property.
+The object has the following properties:
+```json
+{
+    "name": "Required - the item name",
+    "label": "optional label to display, use name if not provided"
+}
 ```
+
+
+[navigation items]: #navigation-items

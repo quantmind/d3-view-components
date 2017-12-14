@@ -4,8 +4,8 @@
       <a class="sidebar-brand" href="{{ brandUrl }}">{{ brand }}</a>
       <a d3-for="item in primaryItems"
         class="list-group-item list-group-item-action"
-        d3-attr-href="item.url"
-        d3-active='currentUrl'
+        d3-attr-href="item.href"
+        d3-active
         {{ itemAttr }}>
         <i d3-class="item.icon" aria-hidden="true"></i>
         <span d3-html="item.label || item.name"></span>
@@ -14,9 +14,9 @@
     <div class="list-group bottom">
       <a d3-for="item in secondaryItems"
         class='list-group-item list-group-item-action compact'
-        d3-attr-href="item.url"
+        d3-attr-href="item.href"
         d3-html="item.name"
-        d3-active='dashboardUrl'
+        d3-active
         {{ itemAttr }}>
       </a>
     </div>
@@ -36,12 +36,15 @@
         d3-html="brand"
         data-transition-duration=250></a>
       <ul class="nav navbar-nav">
-        <li d3-for="item in navItems" class="nav-item" d3-active>
+        <li d3-for="item in navbarItems" class="nav-item" d3-active>
           <a class="nav-link"
             d3-attr-href="item.href || '#'"
             d3-html="item.title"
             d3-if="item.show ? item.show() : true"
-            d3-on-click="item.click ? item.click() : null"></a>
+            d3-on-click="item.click ? item.click() : null">
+            <i d3-class="item.icon" aria-hidden="true"></i>
+            <span d3-html="item.label || item.name" d3-if="item.showLabel !== false"></span>
+          </a>
         </li>
       </ul>
     </nav>
