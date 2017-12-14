@@ -5,16 +5,10 @@ let basePath = '/';
 
 
 if (window.development) {
-    // use build file during development
-    basePath = '/site/';
 
-    window.d3.require.libs.set('d3-view-components', {
-        origin: '/',
-        main: 'build/d3-view-components.js'
-    });
     window.d3.require.libs.set('d3-view', {
         origin: '/',
-        main: 'node_modules/d3-view/build/d3-view.js'
+        main: 'd3-view.js'
     });
 }
 

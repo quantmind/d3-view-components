@@ -1,4 +1,4 @@
-const modules = require('./modules.js');
+const modules = require('./modules.js').components;
 
 
 const files = modules.map(function (m) {return './' + m + '/test.js';});

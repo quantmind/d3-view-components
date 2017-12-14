@@ -29,8 +29,7 @@
         "d3-selection": "1.2",
         "d3-transition": "1.1",
         "d3-view": "1.1",
-        "handlebars": "4.0",
-        "marked": "0.3.7"
+        "handlebars": "4.0"
     },
     "devDependencies": {
         "babel-core": "6.26",
@@ -44,6 +43,7 @@
         "bootstrap": "4.0.0-beta.2",
         "browserify-istanbul": "3.0",
         "eslint": "4.13",
+        "fs-extra": "5.0",
         "istanbul": "0.4",
         "jasmine-core": "2.8",
         "karma": "1.7",
@@ -72,6 +72,7 @@
     },
     "scripts": {
         "lint": "eslint index.js .ci/*.js .ci/**/*.js collapse/*.js flatpickr/*.js marked/*.js modal/*.js sidebar/*.js --no-ignore",
+        "cleanup": "rm -rf build",
         "test": "eslint index.js test src examples && npm run-script unit",
         "rollup": "rollup -c --banner \"$(preamble)\"",
         "dev": "rollup -c -w",
@@ -79,10 +80,9 @@
         "unit": "karma start .ci/karma.unit.js",
         "cover": "karma start .ci/karma.cover.js",
         "debug": "karma start .ci/karma.debug.js",
-        "firefox": "karma start .ci/karma.debug.firefox.js",
-        "docs": "rollup -c .ci/rollup.config.js && view-require -c .ci/require.config.js -s && .ci/build-docs.js && node-sass .ci/docs.scss site/docs.css --include-path node_modules --output-style compressed",
-        "asset": "cd build && POST https://<upload_url>/repos/quantmind/d3-view/releases/:id/assets?name=d3-view.zip",
-        "prepublish": "npm run-script build",
+        "debug:firefox": "karma start .ci/karma.debug.firefox.js",
+        "docs": "rollup -c .ci/rollup.config.js && view-require -c .ci/require.config.js -s && .ci/build-docs.js && node-sass .ci/docs.scss build/docs.css --include-path node_modules --output-style compressed",
+        "prepare": "npm run-script build",
         "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git tag -am \"Release $VERSION.\" v${VERSION} && git push --tags && mkdir -p ../giottojs.org/latest && mkdir -p ../giottojs.org/d3-view/${VERSION} && cp build/* ../giottojs.org/d3-view/${VERSION}/ && cp build/* ../giottojs.org/latest/ && cd ../giottojs.org && git add d3-view/${VERSION} latest && git commit -a -m \"d3-view ${VERSION}\" && git push",
         "release": "publish"
     }

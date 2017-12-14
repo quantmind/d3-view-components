@@ -6,7 +6,7 @@ import resolve from 'rollup-plugin-node-resolve';
 export default {
     input: '.ci/docs.js',
     output: {
-        file: 'build/docs.js',
+        file: 'build/.tmp/docs.js',
         format: 'iife'
     },
     plugins: [

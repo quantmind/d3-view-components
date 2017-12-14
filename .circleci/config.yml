@@ -41,6 +41,20 @@ jobs:
           - run:
               name: release
               command: npm run-script release
+    site:
+      docker:
+        - image: circleci/node:latest-browsers
+      steps:
+        - checkout
+        - run:
+            name: install
+            command: yarn install
+        - run:
+            name: build docs site
+            command: yarn docs
+        - run:
+            name: authenticate bot
+            command: ./.circleci/authenticate.sh
 
 
 workflows:
@@ -50,6 +64,13 @@ workflows:
       - tests
       - coverage
       - release:
+          requires:
+            - tests
+            - coverage
+          filters:
+            branches:
+              only: master
+      - site:
           requires:
             - tests
             - coverage
