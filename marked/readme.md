@@ -18,8 +18,6 @@ var vm = view({
 });
 ```
 
-alternatively, you can crate a plugin for it.
-
 The directive is used throughout this site to render markdown form the [d3-view-component repo](https://github.com/quantmind/d3-view-components).
 
 Simple usage:

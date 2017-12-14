@@ -1,9 +1,11 @@
 export {version as viewComponentsVersion} from './package.json';
+export {default as viewActive} from './active/index';
+export {default as viewCollapse} from './collapse/index';
 export {default as viewFlatpickr} from './flatpickr/index';
 export {default as viewMarked} from './marked/index';
 export {default as viewModal} from './modal/index';
-export {default as viewCollapse} from './collapse/index';
 export {default as viewSidebar} from './sidebar/index';
+export {default as viewTabs} from './tabs/index';
 
 import 'd3-transition';
 import Handlebars from 'handlebars';

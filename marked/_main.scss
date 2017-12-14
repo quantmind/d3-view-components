@@ -1,0 +1,26 @@
+@import 'variables';
+
+.markdown-body {
+
+    .anchor {
+        float: left;
+        padding-right: 4px;
+        margin-left: -20px;
+        line-height: 1;
+
+        i {
+            vertical-align: middle;
+            visibility: hidden;
+            font-size: $marked-heading-icon-size;
+            font-family: monospace;
+        }
+    }
+
+    h1,h2,h3,h4,h5,h6 {
+        &:hover {
+            .anchor i {
+                visibility: visible;
+            }
+        }
+    }
+}
