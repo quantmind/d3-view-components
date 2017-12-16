@@ -4,11 +4,14 @@
 //
 //  yarn docs
 //
-const fs = require('fs-extra');
-const logger = require('console');
-const Handlebars = require('handlebars');
-const pkg = require('../package.json');
-const modules = require('./modules.js');
+const
+    fs = require('fs-extra'),
+    path = require('path'),
+    rimraf = require('rimraf'),
+    logger = require('console'),
+    Handlebars = require('handlebars'),
+    pkg = require('../package.json'),
+    modules = require('./modules.js');
 
 const srcPath = '.ci';
 const sitePath = 'build';
@@ -42,15 +45,8 @@ fs.readFile(templateFile, 'utf8', (err, source) => {
             name = obj.name,
             html = obj.html || name,
             raw = `${sitePath}/${src}`,
-            title = '';
-
-        if (html !== 'index') title = ' - ' + capFirst(name);
-
-        // copy raw file/directory
-        fs.copySync(src, raw);
-
-        // create the html page
-        var outFile = `${sitePath}/${html}.html`,
+            outFile = `${sitePath}/${html}.html`,
+            title = html === 'index' ? '' : ' - ' + capFirst(name),
             contents = template({
                 version: version,
                 min: min,
@@ -58,13 +54,38 @@ fs.readFile(templateFile, 'utf8', (err, source) => {
                 components: componentsInfo
             });
 
-        fs.writeFile(outFile, contents, err => {
-            if (err) {
-                logger.error(`Failed to write ${outFile}: ${err}`);
-            } else {
-                logger.info(`Created ${outFile}`);
-            }
-        });
+        // copy raw file/directory
+        if (process.env.CI) {
+            fs.copySync(src, raw);
+            writeHtml(outFile, contents);
+        }
+        else
+            createSymLinks(src, raw, outFile, contents);
     });
-
 });
+
+
+function writeHtml(outFile, contents) {
+    fs.writeFile(outFile, contents, err => {
+        if (err) {
+            logger.error(`Failed to write ${outFile}: ${err}`);
+        } else {
+            logger.info(`Created ${outFile}`);
+        }
+    });
+}
+
+function createSymLinks (src, raw, outFile, contents) {
+    if (fs.lstatSync(src).isDirectory()) {
+        rimraf(raw, fs, function () {
+            fs.mkdirSync(raw);
+            writeHtml(outFile, contents);
+            fs.readdirSync(src).forEach(name => {
+                fs.ensureSymlink(path.join(src, name), path.join(raw, name));
+            });
+        });
+    } else {
+        fs.ensureSymlink(src, raw);
+        writeHtml(outFile, contents);
+    }
+}

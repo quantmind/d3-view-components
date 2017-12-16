@@ -8,7 +8,7 @@ To use the modal you need to include the modal component and a directive.
 To accomplish this we write a simple d3-view plugin:
 ```javascript
 import {view} from 'd3-view';
-import {viewModal} from 'd3-view-component';
+import {viewModal} from 'd3-view-components';
 
 function modalPlugin (vm) {
     vm.addComponent('modal', viewModal);
@@ -38,5 +38,5 @@ A simple dialog
 <br>
 <div id="simple-modal" class="d-none">
     <modal-title>Simple modal</modal-title>
-    <modal-body>Demontrate a simple modal component using d3-view</modal-body>
+    <modal-body>Demonstrate a simple modal component using d3-view</modal-body>
 </div>

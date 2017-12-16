@@ -3,10 +3,12 @@ import sitePlugin from './components/index';
 import {version} from '../package.json';
 
 
+const DEV = window.development;
+
 let basePath = '/';
 
 
-if (window.development) {
+if (DEV) {
 
     window.d3.require.libs.set('d3-view', {
         origin: '/',
@@ -41,6 +43,9 @@ window.d3.require('d3-view-components', 'd3-view').then(d3 => {
             modal: d3.viewModal.$directive
         }
     }).use(sitePlugin).use(d3.viewForms).use(d3.viewBootstrapForms);
+
+    // disable cache in dev
+    if (DEV) vm.cache.active = false;
 
     vm.model.$openModal = d3.viewModal.$openModal;
 

@@ -9,7 +9,7 @@ The directive asynchrnously requires two libraries:
 To use the directive, make sure it is included in the view constructor:
 ```javascript
 import {view} from 'd3-view';
-import {viewMarked} from 'd3-view-component';
+import {viewMarked} from 'd3-view-components';
 
 var vm = view({
     directives: {
