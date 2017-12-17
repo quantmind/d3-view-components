@@ -21,4 +21,6 @@ Typical usage:
 ```html
 <tabs data-tab-type="pills" data-tab-items='["tab1", "tab2"]'></tabs>
 ```
-<tabs data-tab-type="pills" data-tab-items='["tab1", "tab2"]'></tabs>
+<tabs data-tab-type="pills" data-tab-items='["tab1", "tab2"]'>
+
+</tabs>

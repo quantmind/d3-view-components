@@ -1,13 +1,10 @@
 import {viewEvents, viewProviders} from 'd3-view';
 
 
-const windowPath = 'windowPath';
-
-
 export default {
 
     create (expression) {
-        return windowPath;
+        return 'currentUrl';
     },
 
     refresh (model, value) {
@@ -26,11 +23,7 @@ export default {
 
 
 viewEvents.on('component-created', vm => {
-    if (!vm.parent) vm.model[windowPath] = viewProviders.location.pathname;
-});
-
-viewEvents.on('component-mounted', vm => {
-    vm.model[windowPath] = viewProviders.location.pathname;
+    if (!vm.parent) vm.model.currentUrl = viewProviders.location.href;
 });
 
 

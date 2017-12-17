@@ -1,4 +1,5 @@
 import {isObject, isString} from 'd3-let';
+import {viewSlugify} from 'd3-view';
 
 
 const tabClasses = {
@@ -55,9 +56,9 @@ export default {
                 item = model.$new({label: item});
                 items[idx] = item;
             }
-            if (!item.href) item.href = '#';
-            item.active = false;
             if (!item.label) item.label = `item ${idx+1}`;
+            if (!item.href) item.href = `#${viewSlugify(item.label)}`;
+            item.active = false;
             if (!item.id) item.id = `${idx+1}`;
             return item;
         });
