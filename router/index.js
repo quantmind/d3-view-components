@@ -1,7 +1,7 @@
 import {dispatch} from 'd3-dispatch';
 import {viewEvents, viewDebounce} from 'd3-view';
 
-import Navigo from 'navigo/src/index';
+import Navigo from './navigo';
 
 
 export default function (vm, config) {
@@ -23,7 +23,9 @@ export default function (vm, config) {
             done();
         },
         after (params) {
-            vm.model.$set('currentUrl', router.lastRouteResolved().url);
+            // var url = router.lastRouteResolved().url;
+            var url = vm.providers.location.href;
+            vm.model.$set('currentUrl', url);
             events.call('after', undefined, vm, params);
         },
         leave (params) {

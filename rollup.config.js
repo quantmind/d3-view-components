@@ -1,7 +1,6 @@
 import json from 'rollup-plugin-json';
 import babel from 'rollup-plugin-babel';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import resolve from 'rollup-plugin-node-resolve';
 
 
 const pkg = require('./package.json');
@@ -26,7 +25,6 @@ export default {
             plugins: ['external-helpers'],
             presets: ['es2015-rollup']
         }),
-        sourcemaps(),
-        resolve()
+        sourcemaps()
     ]
 };

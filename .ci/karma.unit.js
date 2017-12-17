@@ -16,7 +16,7 @@ module.exports = function (config) {
         phantomjsLauncher: {
             exitOnResourceError: true
         },
-        browsers: browsers(['PhantomJS', 'Chrome', 'Firefox'])
+        browsers: browsers(['Chrome', 'Firefox'])
     });
 
     if(process.env.TRAVIS || process.env.CIRCLECI) {

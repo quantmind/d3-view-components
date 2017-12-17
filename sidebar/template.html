@@ -36,12 +36,13 @@
         d3-html="brand"
         data-transition-duration=250></a>
       <ul class="nav navbar-nav">
-        <li d3-for="item in navbarItems" class="nav-item" d3-active>
+        <li d3-for="item in navbarItems" class="nav-item">
           <a class="nav-link"
             d3-attr-href="item.href || '#'"
             d3-html="item.title"
             d3-if="item.show ? item.show() : true"
-            d3-on-click="item.click ? item.click() : null">
+            d3-on-click="item.click ? item.click() : null"
+            d3-active>
             <i d3-class="item.icon" aria-hidden="true"></i>
             <span d3-html="item.label || item.name" d3-if="item.showLabel !== false"></span>
           </a>

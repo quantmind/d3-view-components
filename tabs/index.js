@@ -16,6 +16,9 @@ const tabClasses = {
 //  * d3-active directive
 //
 export default {
+    props: {
+        tabTransitionDuration: 250
+    },
 
     model () {
         return {
@@ -29,40 +32,54 @@ export default {
                 }
             },
             // select a tab
-            $selectTab (target) {
-                var model = this;
-                if (isObject(target)) target = target.id;
-
-                model.tabItems.forEach(item => {
-                    item.active = (item.id === target);
-                });
-            },
-            $active (href, url) {
-                let tab;
-                for (let i=0; i<this.tabItems.length; i++) {
-                    tab = this.tabItems[i].href;
-                    if (tab === url && href !== url) return '#####';
+            $selectTab (tab) {
+                if (isObject(tab)) tab = tab.id;
+                var target = this.targets.get(tab);
+                if (target) {
+                    // when local targets are available rather than remote ones
+                    this.tabTarget = target;
+                    var event = this.$event;
+                    if (event && event.currentTarget) this.currentUrl = event.currentTarget.href;
                 }
-                return url;
+                this.tabItems.forEach(item => {
+                    item.active = (item.id === tab);
+                });
             }
         };
     },
 
-    render () {
-        var model = this.model,
+    render (props, attrs, el) {
+        var self = this,
+            model = this.model,
             items = model.tabItems;
+
+        model.targets = new Map;
+
         items.forEach((item, idx) => {
             if (isString(item)) {
                 item = model.$new({label: item});
                 items[idx] = item;
             }
             if (!item.label) item.label = `item ${idx+1}`;
-            if (!item.href) item.href = `#${viewSlugify(item.label)}`;
-            item.active = false;
-            if (!item.id) item.id = `${idx+1}`;
+            if (!item.id) item.id = viewSlugify(item.label);
+            if (!item.href) item.href = `#${item.id}`;
+            //
             return item;
         });
+
+        //
+        //  cache existing targets if avalable
+        this.selectChildren(el).each(function (idx) {
+            var sel = self.select(this),
+                id = sel.attr('id') || (items[idx] ? items[idx].id : null);
+            if (id) model.targets.set(id, sel.html());
+        });
+
         // model.type = data.type;
-        return this.renderFromDist('d3-view-components', '/tabs/template.html');
+        return this.renderFromDist('d3-view-components', '/tabs/template.html', props);
+    },
+
+    mounted () {
+
     }
 };
