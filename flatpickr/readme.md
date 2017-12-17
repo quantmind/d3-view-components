@@ -4,10 +4,10 @@ This directive integrates [flatpickr][] datetime picker with [d3-view][].
 It only requires the ```viewFlatpickr``` directive to be set in your view.
 ```javascript
 import {view} from 'd3-view';
-import {viewFlatpickr} from 'd3-view-component';
+import {viewFlatpickr} from 'd3-view-components';
 
 vm = view({
-    directive: {
+    directives: {
         flatpickr: viewFlatpickr
     }
 });

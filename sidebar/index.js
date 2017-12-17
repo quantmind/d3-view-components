@@ -6,10 +6,8 @@ import {viewModel} from 'd3-view';
 //
 //  Requires:
 //
-//  * navbar component
-//  * d3-collapse directive
-//  * d3-append directive
-//  * d3-active directive
+//  * collapse directive
+//  * active directive (Optional)
 //
 export default {
     props: {
@@ -21,7 +19,6 @@ export default {
     },
 
     model: {
-        sidebarContent: '',
         primaryItems: [],
         secondaryItems: [],
         sidebarToggle: '<i class="ion-android-menu"></i>',
@@ -39,23 +36,25 @@ export default {
 
     render (props, attrs, el) {
         var model = this.model;
-        model.primaryItems = asItems(model, model.primaryItems);
-        model.secondaryItems = asItems(model, model.secondaryItems);
-        model.navbarItems = asItems(model, model.navbarItems);
-        model.sidebarContent = this.select(el).html();
+        asItems(model, model.primaryItems);
+        asItems(model, model.secondaryItems);
+        asItems(model, model.navbarItems);
+        props.sidebarContent = this.select(el).html();
         return this.renderFromDist('d3-view-components', '/sidebar/template.html', props);
     }
 };
 
 
 function asItems (model, items) {
-    return items.map(item => {
+    let item;
+    for (let i=0; i<items.length; ++i) {
+        item = items[i];
         if (typeof item === 'string')
             item = {
                 name: item
             };
         if (!(item instanceof viewModel)) item = model.$new(item);
         if (!item.href) item.$set('href', item.name);
-        return item;
-    });
+        items[i] = item;
+    }
 }

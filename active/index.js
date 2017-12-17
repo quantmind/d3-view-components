@@ -1,21 +1,56 @@
+import {viewEvents, viewProviders} from 'd3-view';
+
+
 export default {
 
-    refresh (model, value) {
-        const
-            href = (this.sel.attr('href') || '/').substring(1).split('/'),
-            baseUrl = model.baseUrl || '/',
-            current = r(value || '/', baseUrl).substring(1).split('/');
+    //
+    // Listen for changes to the currentUrl attribute
+    mount (model) {
+        var dir = this;
+        model.$on(`currentUrl.${this.uid}`, () => dir.refresh(model));
+        return model;
+    },
 
-        for (let i=0; i<href.length; ++i) {
-            if (current[i] !== href[i])
-                return this.sel.classed('active', false);
-        }
-        this.sel.classed('active', true);
+    refresh (model) {
+        const
+            href = this.el.href,
+            current = model.currentUrl,
+            sel = this.sel;
+
+        sel.classed('active', false);
+
+        if (!href || !current || href !== current.substring(0, href.length)) return;
+        if (sel.attr('data-active-strict') !== null && href !== current) return;
+
+        var rel = current.substring(href.length),
+            dvd = rel.substring(0, 1);
+
+        if (!rel || dvd === '/' || dvd === '#')
+            this.sel.classed('active', true);
+    },
+
+    //
+    // Remove listener for changes to the currentUrl attribute
+    destroy (model) {
+        if (model)
+            model.$off(`currentUrl.${this.uid}`);
     }
 };
 
+//
+// Make sure the currentUrl attribute is reactive
+viewEvents.on('component-created', vm => {
+    if (!vm.parent) vm.model.currentUrl = viewProviders.location.href;
+});
+
 
 function r (url, baseUrl) {
-    if (url.substring(0, baseUrl.length) === baseUrl) return url.substring(baseUrl.length);
-    return url;
+    if (url.substring(0, baseUrl.length) === baseUrl) url = url.substring(baseUrl.length);
+    return removeFrontSlash(url);
+}
+
+
+function removeFrontSlash (path) {
+    if (path.substring(0, 1) === '/') path = path.substring(1);
+    return path;
 }

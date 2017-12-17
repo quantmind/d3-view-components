@@ -1,31 +1,54 @@
-// d3-view-components Version 0.0.2. Copyright 2017 quantmind.com.
+// d3-view-components Version 0.0.3. Copyright 2017 quantmind.com.
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-dispatch'), require('d3-view'), require('d3-selection'), require('d3-ease'), require('d3-let'), require('d3-transition'), require('handlebars')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'd3-dispatch', 'd3-view', 'd3-selection', 'd3-ease', 'd3-let', 'd3-transition', 'handlebars'], factory) :
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-view'), require('d3-dispatch'), require('d3-selection'), require('d3-ease'), require('d3-let'), require('d3-transition'), require('handlebars')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'd3-view', 'd3-dispatch', 'd3-selection', 'd3-ease', 'd3-let', 'd3-transition', 'handlebars'], factory) :
 	(factory((global.d3 = global.d3 || {}),global.d3,global.d3,global.d3,global.d3,global.d3,global.d3,global.d3));
-}(this, (function (exports,d3Dispatch,d3View,d3Selection,d3Ease,d3Let,d3Transition,Handlebars) { 'use strict';
+}(this, (function (exports,d3View,d3Dispatch,d3Selection,d3Ease,d3Let,d3Transition,Handlebars) { 'use strict';
 
 Handlebars = Handlebars && Handlebars.hasOwnProperty('default') ? Handlebars['default'] : Handlebars;
 
-var version = "0.0.2";
+var version = "0.0.3";
 
 var index = {
-    refresh: function refresh(model, value) {
-        var href = (this.sel.attr('href') || '/').substring(1).split('/'),
-            baseUrl = model.baseUrl || '/',
-            current = r(value || '/', baseUrl).substring(1).split('/');
 
-        for (var i = 0; i < href.length; ++i) {
-            if (current[i] !== href[i]) return this.sel.classed('active', false);
-        }
-        this.sel.classed('active', true);
+    //
+    // Listen for changes to the currentUrl attribute
+    mount: function mount(model) {
+        var dir = this;
+        model.$on('currentUrl.' + this.uid, function () {
+            return dir.refresh(model);
+        });
+        return model;
+    },
+    refresh: function refresh(model) {
+        var href = this.el.href,
+            current = model.currentUrl,
+            sel = this.sel;
+
+        sel.classed('active', false);
+
+        if (!href || !current || href !== current.substring(0, href.length)) return;
+        if (sel.attr('data-active-strict') !== null && href !== current) return;
+
+        var rel = current.substring(href.length),
+            dvd = rel.substring(0, 1);
+
+        if (!rel || dvd === '/' || dvd === '#') this.sel.classed('active', true);
+    },
+
+
+    //
+    // Remove listener for changes to the currentUrl attribute
+    destroy: function destroy(model) {
+        if (model) model.$off('currentUrl.' + this.uid);
     }
 };
 
-function r(url, baseUrl) {
-    if (url.substring(0, baseUrl.length) === baseUrl) return url.substring(baseUrl.length);
-    return url;
-}
+//
+// Make sure the currentUrl attribute is reactive
+d3View.viewEvents.on('component-created', function (vm) {
+    if (!vm.parent) vm.model.currentUrl = d3View.viewProviders.location.href;
+});
 
 var COLLAPSE = 'collapse';
 var COLLAPSING = 'd3-collapsing';
@@ -176,6 +199,52 @@ var index$2 = {
     }
 };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var slicedToArray = function () {
   function sliceIterator(arr, i) {
     var _arr = [];
@@ -213,6 +282,28 @@ var slicedToArray = function () {
     }
   };
 }();
+
+
+
+
+
+
+
+
+
+
+
+
+
+var toConsumableArray = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
 
 var index$3 = {
     refresh: function refresh(model, doc) {
@@ -360,10 +451,8 @@ function textFromTarget(sel) {
 //
 //  Requires:
 //
-//  * navbar component
-//  * d3-collapse directive
-//  * d3-append directive
-//  * d3-active directive
+//  * collapse directive
+//  * active directive (Optional)
 //
 var index$5 = {
     props: {
@@ -375,7 +464,6 @@ var index$5 = {
     },
 
     model: {
-        sidebarContent: '',
         primaryItems: [],
         secondaryItems: [],
         sidebarToggle: '<i class="ion-android-menu"></i>',
@@ -392,23 +480,25 @@ var index$5 = {
 
     render: function render(props, attrs, el) {
         var model = this.model;
-        model.primaryItems = asItems(model, model.primaryItems);
-        model.secondaryItems = asItems(model, model.secondaryItems);
-        model.navbarItems = asItems(model, model.navbarItems);
-        model.sidebarContent = this.select(el).html();
+        asItems(model, model.primaryItems);
+        asItems(model, model.secondaryItems);
+        asItems(model, model.navbarItems);
+        props.sidebarContent = this.select(el).html();
         return this.renderFromDist('d3-view-components', '/sidebar/template.html', props);
     }
 };
 
 function asItems(model, items) {
-    return items.map(function (item) {
+    var item = void 0;
+    for (var i = 0; i < items.length; ++i) {
+        item = items[i];
         if (typeof item === 'string') item = {
             name: item
         };
         if (!(item instanceof d3View.viewModel)) item = model.$new(item);
         if (!item.href) item.$set('href', item.name);
-        return item;
-    });
+        items[i] = item;
+    }
 }
 
 var tabClasses = {
@@ -424,6 +514,10 @@ var tabClasses = {
 //  * d3-active directive
 //
 var index$6 = {
+    props: {
+        tabTransitionDuration: 250
+    },
+
     model: function model() {
         return {
             tabItems: [],
@@ -436,42 +530,556 @@ var index$6 = {
                 }
             },
             // select a tab
-            $selectTab: function $selectTab(target) {
-                var model = this;
-                if (d3Let.isObject(target)) target = target.id;
-
-                model.tabItems.forEach(function (item) {
-                    item.active = item.id === target;
-                });
-            },
-            $active: function $active(href, url) {
-                var tab = void 0;
-                for (var i = 0; i < this.tabItems.length; i++) {
-                    tab = this.tabItems[i].href;
-                    if (tab === url && href !== url) return '#####';
+            $selectTab: function $selectTab(tab) {
+                if (d3Let.isObject(tab)) tab = tab.id;
+                var target = this.targets.get(tab);
+                if (target) {
+                    // when local targets are available rather than remote ones
+                    this.tabTarget = target;
+                    var event = this.$event;
+                    if (event && event.currentTarget) this.currentUrl = event.currentTarget.href;
                 }
-                return url;
+                this.tabItems.forEach(function (item) {
+                    item.active = item.id === tab;
+                });
             }
         };
     },
-    render: function render() {
-        var model = this.model,
+    render: function render(props, attrs, el) {
+        var self = this,
+            model = this.model,
             items = model.tabItems;
+
+        model.targets = new Map();
+
         items.forEach(function (item, idx) {
             if (d3Let.isString(item)) {
                 item = model.$new({ label: item });
                 items[idx] = item;
             }
-            if (!item.href) item.href = '#';
-            item.active = false;
             if (!item.label) item.label = 'item ' + (idx + 1);
-            if (!item.id) item.id = '' + (idx + 1);
+            if (!item.id) item.id = d3View.viewSlugify(item.label);
+            if (!item.href) item.href = '#' + item.id;
+            //
             return item;
         });
+
+        //
+        //  cache existing targets if avalable
+        this.selectChildren(el).each(function (idx) {
+            var sel = self.select(this),
+                id = sel.attr('id') || (items[idx] ? items[idx].id : null);
+            if (id) model.targets.set(id, sel.html());
+        });
+
         // model.type = data.type;
-        return this.renderFromDist('d3-view-components', '/tabs/template.html');
-    }
+        return this.renderFromDist('d3-view-components', '/tabs/template.html', props);
+    },
+    mounted: function mounted() {}
 };
+
+function isPushStateAvailable() {
+  return !!(typeof window !== 'undefined' && window.history && window.history.pushState);
+}
+
+function Navigo(r, useHash, hash) {
+  this.root = null;
+  this._routes = [];
+  this._useHash = useHash;
+  this._hash = typeof hash === 'undefined' ? '#' : hash;
+  this._paused = false;
+  this._destroyed = false;
+  this._lastRouteResolved = null;
+  this._notFoundHandler = null;
+  this._defaultHandler = null;
+  this._usePushState = !useHash && isPushStateAvailable();
+  this._onLocationChange = this._onLocationChange.bind(this);
+  this._genericHooks = null;
+  this._historyAPIUpdateMethod = 'pushState';
+
+  if (r) {
+    this.root = useHash ? r.replace(/\/$/, '/' + this._hash) : r.replace(/\/$/, '');
+  } else if (useHash) {
+    this.root = this._cLoc().split(this._hash)[0].replace(/\/$/, '/' + this._hash);
+  }
+
+  this._listen();
+  this.updatePageLinks();
+}
+
+function clean(s) {
+  if (s instanceof RegExp) return s;
+  return s.replace(/\/+$/, '').replace(/^\/+/, '^/');
+}
+
+function regExpResultToParams(match, names) {
+  if (names.length === 0) return null;
+  if (!match) return null;
+  return match.slice(1, match.length).reduce(function (params, value, index) {
+    if (params === null) params = {};
+    params[names[index]] = decodeURIComponent(value);
+    return params;
+  }, null);
+}
+
+function replaceDynamicURLParts(route) {
+  var paramNames = [],
+      regexp;
+
+  if (route instanceof RegExp) {
+    regexp = route;
+  } else {
+    regexp = new RegExp(route.replace(Navigo.PARAMETER_REGEXP, function (full, dots, name) {
+      paramNames.push(name);
+      return Navigo.REPLACE_VARIABLE_REGEXP;
+    }).replace(Navigo.WILDCARD_REGEXP, Navigo.REPLACE_WILDCARD) + Navigo.FOLLOWED_BY_SLASH_REGEXP, Navigo.MATCH_REGEXP_FLAGS);
+  }
+  return { regexp: regexp, paramNames: paramNames };
+}
+
+function getUrlDepth(url) {
+  return url.replace(/\/$/, '').split('/').length;
+}
+
+function compareUrlDepth(urlA, urlB) {
+  return getUrlDepth(urlB) - getUrlDepth(urlA);
+}
+
+function findMatchedRoutes(url) {
+  var routes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+  return routes.map(function (route) {
+    var _replaceDynamicURLPar = replaceDynamicURLParts(clean(route.route)),
+        regexp = _replaceDynamicURLPar.regexp,
+        paramNames = _replaceDynamicURLPar.paramNames;
+
+    var match = url.replace(/^\/+/, '/').match(regexp);
+    var params = regExpResultToParams(match, paramNames);
+
+    return match ? { match: match, route: route, params: params } : false;
+  }).filter(function (m) {
+    return m;
+  });
+}
+
+function match(url, routes) {
+  return findMatchedRoutes(url, routes)[0] || false;
+}
+
+function root(url, routes) {
+  var matched = routes.map(function (route) {
+    return route.route === '' || route.route === '*' ? url : url.split(new RegExp(route.route + '($|\/)'))[0];
+  });
+  var fallbackURL = clean(url);
+
+  if (matched.length > 1) {
+    return matched.reduce(function (result, url) {
+      if (result.length > url.length) result = url;
+      return result;
+    }, matched[0]);
+  } else if (matched.length === 1) {
+    return matched[0];
+  }
+  return fallbackURL;
+}
+
+function isHashChangeAPIAvailable() {
+  return !!(typeof window !== 'undefined' && 'onhashchange' in window);
+}
+
+function extractGETParameters(url) {
+  return url.split(/\?(.*)?$/).slice(1).join('');
+}
+
+function getOnlyURL(url, useHash, hash) {
+  var onlyURL = url,
+      split;
+  var cleanGETParam = function cleanGETParam(str) {
+    return str.split(/\?(.*)?$/)[0];
+  };
+
+  if (typeof hash === 'undefined') {
+    // To preserve BC
+    hash = '#';
+  }
+
+  if (isPushStateAvailable() && !useHash) {
+    onlyURL = cleanGETParam(url).split(hash)[0];
+  } else {
+    split = url.split(hash);
+    onlyURL = split.length > 1 ? cleanGETParam(split[1]) : cleanGETParam(split[0]);
+  }
+
+  return onlyURL;
+}
+
+function manageHooks(handler, hooks, params) {
+  if (hooks && (typeof hooks === 'undefined' ? 'undefined' : _typeof(hooks)) === 'object') {
+    if (hooks.before) {
+      hooks.before(function () {
+        var shouldRoute = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+        if (!shouldRoute) return;
+        handler();
+        hooks.after && hooks.after(params);
+      }, params);
+    } else if (hooks.after) {
+      handler();
+      hooks.after && hooks.after(params);
+    }
+    return;
+  }
+  handler();
+}
+
+function isHashedRoot(url, useHash, hash) {
+  if (isPushStateAvailable() && !useHash) {
+    return false;
+  }
+
+  if (!url.match(hash)) {
+    return false;
+  }
+
+  var split = url.split(hash);
+
+  if (split.length < 2 || split[1] === '') {
+    return true;
+  }
+
+  return false;
+}
+
+Navigo.prototype = {
+  helpers: {
+    match: match,
+    root: root,
+    clean: clean,
+    getOnlyURL: getOnlyURL
+  },
+  navigate: function navigate(path, absolute) {
+    var to;
+
+    path = path || '';
+    if (this._usePushState) {
+      to = (!absolute ? this._getRoot() + '/' : '') + path.replace(/^\/+/, '/');
+      to = to.replace(/([^:])(\/{2,})/g, '$1/');
+      history[this._historyAPIUpdateMethod]({}, '', to);
+      this.resolve();
+    } else if (typeof window !== 'undefined') {
+      path = path.replace(new RegExp('^' + this._hash), '');
+      window.location.href = window.location.href.replace(/#$/, '').replace(new RegExp(this._hash + '.*$'), '') + this._hash + path;
+    }
+    return this;
+  },
+  on: function on() {
+    var _this = this;
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    if (typeof args[0] === 'function') {
+      this._defaultHandler = { handler: args[0], hooks: args[1] };
+    } else if (args.length >= 2) {
+      if (args[0] === '/') {
+        var func = args[1];
+
+        if (_typeof(args[1]) === 'object') {
+          func = args[1].uses;
+        }
+
+        this._defaultHandler = { handler: func, hooks: args[2] };
+      } else {
+        this._add(args[0], args[1], args[2]);
+      }
+    } else if (_typeof(args[0]) === 'object') {
+      var orderedRoutes = Object.keys(args[0]).sort(compareUrlDepth);
+
+      orderedRoutes.forEach(function (route) {
+        _this.on(route, args[0][route]);
+      });
+    }
+    return this;
+  },
+  off: function off(handler) {
+    if (this._defaultHandler !== null && handler === this._defaultHandler.handler) {
+      this._defaultHandler = null;
+    } else if (this._notFoundHandler !== null && handler === this._notFoundHandler.handler) {
+      this._notFoundHandler = null;
+    }
+    this._routes = this._routes.reduce(function (result, r) {
+      if (r.handler !== handler) result.push(r);
+      return result;
+    }, []);
+    return this;
+  },
+  notFound: function notFound(handler, hooks) {
+    this._notFoundHandler = { handler: handler, hooks: hooks };
+    return this;
+  },
+  resolve: function resolve(current) {
+    var _this2 = this;
+
+    var handler, m;
+    var url = (current || this._cLoc()).replace(this._getRoot(), '');
+
+    if (this._useHash) {
+      url = url.replace(new RegExp('^\/' + this._hash), '/');
+    }
+
+    var GETParameters = extractGETParameters(current || this._cLoc());
+    var onlyURL = getOnlyURL(url, this._useHash, this._hash);
+
+    if (this._paused) return false;
+
+    if (this._lastRouteResolved && onlyURL === this._lastRouteResolved.url && GETParameters === this._lastRouteResolved.query) {
+      if (this._lastRouteResolved.hooks && this._lastRouteResolved.hooks.already) {
+        this._lastRouteResolved.hooks.already(this._lastRouteResolved.params);
+      }
+      return false;
+    }
+
+    m = match(onlyURL, this._routes);
+
+    if (m) {
+      this._callLeave();
+      this._lastRouteResolved = {
+        url: onlyURL,
+        query: GETParameters,
+        hooks: m.route.hooks,
+        params: m.params,
+        name: m.route.name
+      };
+      handler = m.route.handler;
+      manageHooks(function () {
+        manageHooks(function () {
+          m.route.route instanceof RegExp ? handler.apply(undefined, toConsumableArray(m.match.slice(1, m.match.length))) : handler(m.params, GETParameters);
+        }, m.route.hooks, m.params, _this2._genericHooks);
+      }, this._genericHooks, m.params);
+      return m;
+    } else if (this._defaultHandler && (onlyURL === '' || onlyURL === '/' || onlyURL === this._hash || isHashedRoot(onlyURL, this._useHash, this._hash))) {
+      manageHooks(function () {
+        manageHooks(function () {
+          _this2._callLeave();
+          _this2._lastRouteResolved = { url: onlyURL, query: GETParameters, hooks: _this2._defaultHandler.hooks };
+          _this2._defaultHandler.handler(GETParameters);
+        }, _this2._defaultHandler.hooks);
+      }, this._genericHooks);
+      return true;
+    } else if (this._notFoundHandler) {
+      manageHooks(function () {
+        manageHooks(function () {
+          _this2._callLeave();
+          _this2._lastRouteResolved = { url: onlyURL, query: GETParameters, hooks: _this2._notFoundHandler.hooks };
+          _this2._notFoundHandler.handler(GETParameters);
+        }, _this2._notFoundHandler.hooks);
+      }, this._genericHooks);
+    }
+    return false;
+  },
+  destroy: function destroy() {
+    this._routes = [];
+    this._destroyed = true;
+    clearTimeout(this._listeningInterval);
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('popstate', this._onLocationChange);
+      window.removeEventListener('hashchange', this._onLocationChange);
+    }
+  },
+  updatePageLinks: function updatePageLinks() {
+    var self = this;
+
+    if (typeof document === 'undefined') return;
+
+    this._findLinks().forEach(function (link) {
+      if (!link.hasListenerAttached) {
+        link.addEventListener('click', function (e) {
+          var location = self.getLinkPath(link);
+
+          if (!self._destroyed) {
+            e.preventDefault();
+            self.navigate(location.replace(/\/+$/, '').replace(/^\/+/, '/'));
+          }
+        });
+        link.hasListenerAttached = true;
+      }
+    });
+  },
+  generate: function generate(name) {
+    var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    var result = this._routes.reduce(function (result, route) {
+      var key;
+
+      if (route.name === name) {
+        result = route.route;
+        for (key in data) {
+          result = result.toString().replace(':' + key, data[key]);
+        }
+      }
+      return result;
+    }, '');
+
+    return this._useHash ? this._hash + result : result;
+  },
+  link: function link(path) {
+    return this._getRoot() + path;
+  },
+  pause: function pause() {
+    var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    this._paused = status;
+    if (status) {
+      this._historyAPIUpdateMethod = 'replaceState';
+    } else {
+      this._historyAPIUpdateMethod = 'pushState';
+    }
+  },
+  resume: function resume() {
+    this.pause(false);
+  },
+  historyAPIUpdateMethod: function historyAPIUpdateMethod(value) {
+    if (typeof value === 'undefined') return this._historyAPIUpdateMethod;
+    this._historyAPIUpdateMethod = value;
+    return value;
+  },
+  disableIfAPINotAvailable: function disableIfAPINotAvailable() {
+    if (!isPushStateAvailable()) {
+      this.destroy();
+    }
+  },
+  lastRouteResolved: function lastRouteResolved() {
+    return this._lastRouteResolved;
+  },
+  getLinkPath: function getLinkPath(link) {
+    return link.getAttribute('href');
+  },
+  hooks: function hooks(_hooks) {
+    this._genericHooks = _hooks;
+  },
+
+  _add: function _add(route) {
+    var handler = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var hooks = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+    if (typeof route === 'string') {
+      route = encodeURI(route);
+    }
+    if ((typeof handler === 'undefined' ? 'undefined' : _typeof(handler)) === 'object') {
+      this._routes.push({
+        route: route,
+        handler: handler.uses,
+        name: handler.as,
+        hooks: hooks || handler.hooks
+      });
+    } else {
+      this._routes.push({ route: route, handler: handler, hooks: hooks });
+    }
+    return this._add;
+  },
+  _getRoot: function _getRoot() {
+    if (this.root !== null) return this.root;
+    this.root = root(this._cLoc().split('?')[0], this._routes);
+    return this.root;
+  },
+  _listen: function _listen() {
+    var _this3 = this;
+
+    if (this._usePushState) {
+      window.addEventListener('popstate', this._onLocationChange);
+    } else if (isHashChangeAPIAvailable()) {
+      window.addEventListener('hashchange', this._onLocationChange);
+    } else {
+      var cached = this._cLoc(),
+          current = void 0,
+          _check = void 0;
+
+      _check = function check() {
+        current = _this3._cLoc();
+        if (cached !== current) {
+          cached = current;
+          _this3.resolve();
+        }
+        _this3._listeningInterval = setTimeout(_check, 200);
+      };
+      _check();
+    }
+  },
+  _cLoc: function _cLoc() {
+    if (typeof window !== 'undefined') {
+      if (typeof window.__NAVIGO_WINDOW_LOCATION_MOCK__ !== 'undefined') {
+        return window.__NAVIGO_WINDOW_LOCATION_MOCK__;
+      }
+      return clean(window.location.href);
+    }
+    return '';
+  },
+  _findLinks: function _findLinks() {
+    return [].slice.call(document.querySelectorAll('[data-navigo]'));
+  },
+  _onLocationChange: function _onLocationChange() {
+    this.resolve();
+  },
+  _callLeave: function _callLeave() {
+    if (this._lastRouteResolved && this._lastRouteResolved.hooks && this._lastRouteResolved.hooks.leave) {
+      this._lastRouteResolved.hooks.leave();
+    }
+  }
+};
+
+Navigo.PARAMETER_REGEXP = /([:*])(\w+)/g;
+Navigo.WILDCARD_REGEXP = /\*/g;
+Navigo.REPLACE_VARIABLE_REGEXP = '([^\/]+)';
+Navigo.REPLACE_WILDCARD = '(?:.*)';
+Navigo.FOLLOWED_BY_SLASH_REGEXP = '(?:\/$|$)';
+Navigo.MATCH_REGEXP_FLAGS = '';
+
+var index$7 = function (vm, config) {
+    config = config || {};
+    var events = d3Dispatch.dispatch('before', 'after', 'leave'),
+        baseUrl = removeBackSlash(vm.providers.resolve(config.basePath || '/')),
+        router = new Navigo(baseUrl);
+
+    vm.router = router;
+    vm.routerEvents = events;
+    vm.updatePageLinks = d3View.viewDebounce(function () {
+        vm.logDebug('update page links');
+        vm.router.updatePageLinks();
+    });
+
+    router.hooks({
+        before: function before(done, params) {
+            events.call('before', undefined, vm, params);
+            done();
+        },
+        after: function after(params) {
+            // var url = router.lastRouteResolved().url;
+            var url = vm.providers.location.href;
+            vm.model.$set('currentUrl', url);
+            events.call('after', undefined, vm, params);
+        },
+        leave: function leave(params) {
+            events.call('leave', undefined, vm, params);
+        }
+    });
+
+    d3View.viewEvents.on('component-mounted', function (cm) {
+        var root = cm.root;
+        if (root === vm) {
+            vm.updatePageLinks();
+            if (cm === vm && config.autoResolve !== false) vm.router.resolve();
+        }
+    });
+
+    if (config.routes) config.routes(vm);
+    return vm;
+};
+
+function removeBackSlash(path) {
+    if (path.substring(path.length - 1) === '/') path = path.substring(0, path.substring - 1);
+    return path;
+}
 
 d3View.viewProviders.compileTemplate = Handlebars.compile;
 
@@ -483,6 +1091,7 @@ exports.viewMarked = index$3;
 exports.viewModal = index$4;
 exports.viewSidebar = index$5;
 exports.viewTabs = index$6;
+exports.viewRouter = index$7;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
