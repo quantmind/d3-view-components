@@ -7,7 +7,7 @@ import Navigo from './navigo';
 export default function (vm, config) {
     config = config || {};
     var events = dispatch('before', 'after', 'leave'),
-        baseUrl = removeBackSlash(vm.providers.resolve(config.basePath || '/')),
+        baseUrl = vm.providers.resolve(config.basePath || '/'),
         router = new Navigo(baseUrl);
 
     vm.router = router;
@@ -16,6 +16,7 @@ export default function (vm, config) {
         vm.logDebug('update page links');
         vm.router.updatePageLinks();
     });
+    if (config.routes) config.routes(vm);
 
     router.hooks({
         before (done, params) {
@@ -37,11 +38,13 @@ export default function (vm, config) {
         var root = cm.root;
         if (root === vm) {
             vm.updatePageLinks();
-            if (cm === vm && config.autoResolve !== false) vm.router.resolve();
+            if (cm === vm && config.autoResolve !== false) {
+                vm.logDebug('Resolve route with router');
+                vm.router.resolve();
+            }
         }
     });
 
-    if (config.routes) config.routes(vm);
     return vm;
 };
 

@@ -1,30 +1,22 @@
-## Modal
 
-Use the modal component to add dialogs to your site for lightboxes, user notifications, or completely custom content.
+## Modal Plugin
+
+Use the modal plugin to add dialogs to your site for lightboxes, user notifications, or custom content.
 
 ### Setup
 
-To use the modal you need to include the modal component and a directive.
-To accomplish this we write a simple d3-view plugin:
+To use the modal you need to **use** the modal plugin.
 ```javascript
 import {view} from 'd3-view';
 import {viewModal} from 'd3-view-components';
 
-function modalPlugin (vm) {
-    vm.addComponent('modal', viewModal);
-    vm.addDirective('modal', viewModal.$directive);
-    //
-    // inject $openModal into the root model
-    vm.model.$openModal = viewModal.$openModal;
-}
-
-view().use(modalPlugin).mount('body');
+view().use(viewModal).mount('body');
 ```
 
-The ``viewModal.$openModal`` is an utility function for opening the modal with
+The plugins add the ``$openModal`` utility function for opening the modal with
 custom options.
 
-### Simple
+### Simple Example
 
 A simple dialog
 ```html

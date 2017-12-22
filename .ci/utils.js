@@ -1,5 +1,5 @@
 // Test utilities
-import {viewProviders} from 'd3-view';
+import {viewProviders, viewDebounce} from 'd3-view';
 
 
 //
@@ -19,6 +19,7 @@ export function test (name, runAsync) {
     return it(name, testAsync(runAsync));
 }
 
+export const nextTick = viewDebounce();
 
 //
 //  Return an object with a promise and the resolve function for the promise

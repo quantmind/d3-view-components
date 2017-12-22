@@ -17,7 +17,6 @@ if (DEV) {
 function componentsPlugin (d3) {
 
     return function (vm) {
-        vm.addComponent('modal', d3.viewModal);
         vm.addComponent('sidebar', d3.viewSidebar);
         vm.addComponent('tabs', d3.viewTabs);
         //
@@ -25,13 +24,16 @@ function componentsPlugin (d3) {
         vm.addDirective('collapse', d3.viewCollapse);
         vm.addDirective('flatpickr', d3.viewFlatpickr);
         vm.addDirective('marked', d3.viewMarked);
-        vm.addDirective('modal', d3.viewModal.$directive);
         //
-        vm.model.$openModal = d3.viewModal.$openModal;
+        vm.use(d3.viewModal);
+        //
         d3.viewRouter(vm, {routes});
         //
         // disable caching in dev
-        if (DEV) vm.cache.active = false;
+        if (DEV) {
+            vm.cache.active = false;
+            vm.providers.setDebug();
+        }
     };
 
     function routes (vm) {

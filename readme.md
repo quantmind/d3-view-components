@@ -1,4 +1,4 @@
-# d3-view Components
+# Components for d3-view
 
 
 [![NPM](https://badge.fury.io/js/d3-view-components.svg)](https://www.npmjs.com/package/d3-view-components)

@@ -33,6 +33,7 @@ The object has the following properties:
 {
     "name": "Required - the item name",
     "label": "optional label to display, use name if not provided"
+    "href": "optional href for the anchor, use name if not available"
 }
 ```
 

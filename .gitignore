@@ -7,3 +7,6 @@
 # files
 .DS_Store
 router/navigo.js
+
+# IDEs
+*.sublime-workspace
