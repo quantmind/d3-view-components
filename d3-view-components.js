@@ -1,9 +1,9 @@
 // d3-view-components Version 0.0.3. Copyright 2017 quantmind.com.
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-view'), require('d3-dispatch'), require('d3-selection'), require('d3-ease'), require('d3-let'), require('d3-transition'), require('handlebars')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'd3-view', 'd3-dispatch', 'd3-selection', 'd3-ease', 'd3-let', 'd3-transition', 'handlebars'], factory) :
-	(factory((global.d3 = global.d3 || {}),global.d3,global.d3,global.d3,global.d3,global.d3,global.d3,global.d3));
-}(this, (function (exports,d3View,d3Dispatch,d3Selection,d3Ease,d3Let,d3Transition,Handlebars) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-view'), require('d3-dispatch'), require('d3-ease'), require('d3-let'), require('d3-transition'), require('handlebars')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'd3-view', 'd3-dispatch', 'd3-ease', 'd3-let', 'd3-transition', 'handlebars'], factory) :
+	(factory((global.d3 = global.d3 || {}),global.d3,global.d3,global.d3,global.d3,global.d3,global.d3));
+}(this, (function (exports,d3View,d3Dispatch,d3Ease,d3Let,d3Transition,Handlebars) { 'use strict';
 
 Handlebars = Handlebars && Handlebars.hasOwnProperty('default') ? Handlebars['default'] : Handlebars;
 
@@ -350,7 +350,7 @@ var index$3 = {
     }
 };
 
-var index$4 = {
+var modalComponent = {
     props: {
         transitionDuration: 300
     },
@@ -383,52 +383,64 @@ var index$4 = {
 
     render: function render(props) {
         return this.renderFromDist('d3-view-components', '/modal/template.html', props);
-    },
+    }
 
-    // function for opening a modal
-    // inject this method to the root model
-    $openModal: function $openModal(options) {
-        if (d3Let.isString(options)) options = optionsFromTarget(options);
-        var modal = d3Selection.select('#d3-view-modal');
-        if (!modal.size()) d3Selection.select('body').append('modal').mount(options, function (v) {
-            return v.model.$showModal();
-        });else modal.model().$update(options).$showModal();
-    },
+};
 
-
-    $directive: {
-        refresh: function refresh(model, show) {
-            if (!this.passes) return;
-            var sel = this.sel,
-                modal = sel.classed('modal');
-            var height = void 0;
-            if (show) {
-                sel.style('display', 'block').classed('show', true);
-                if (modal) {
-                    height = sel.style('height');
-                    sel.style('top', '-' + height);
-                    this.transition(sel).ease(d3Ease.easeExpOut).style('top', '0px');
-                }
-            } else {
-                var op = sel.style('opacity'),
-                    t = this.transition(sel);
-                sel.classed('show', false);
-                if (modal) {
-                    height = sel.style('height');
-                    t.style('top', '-' + height).on('end', function () {
-                        sel.style('display', 'none');
-                    });
-                } else t.style('opacity', 0);
-                t.on('end', function () {
-                    sel.style('display', 'none').style('opacity', op);
-                });
+var modalDirective = {
+    refresh: function refresh(model, show) {
+        if (!this.passes) return;
+        var sel = this.sel,
+            modal = sel.classed('modal');
+        var height = void 0;
+        if (show) {
+            sel.style('display', 'block').classed('show', true);
+            if (modal) {
+                height = sel.style('height');
+                sel.style('top', '-' + height);
+                this.transition(sel).ease(d3Ease.easeExpOut).style('top', '0px');
             }
+        } else {
+            var op = sel.style('opacity'),
+                t = this.transition(sel);
+            sel.classed('show', false);
+            if (modal) {
+                height = sel.style('height');
+                t.style('top', '-' + height).on('end', function () {
+                    sel.style('display', 'none');
+                });
+            } else t.style('opacity', 0);
+            t.on('end', function () {
+                sel.style('display', 'none').style('opacity', op);
+            });
         }
     }
 };
 
+var index$4 = {
+    modalComponent: modalComponent,
+    modalDirective: modalDirective,
+    modalOpen: modalOpen,
+
+    install: function install(vm) {
+        vm.addComponent('modal', modalComponent);
+        vm.addDirective('modal', modalDirective);
+        vm.model.$openModal = modalOpen;
+    }
+};
+
+// function for opening a modal
+// inject this method to the root model
+function modalOpen(options) {
+    if (d3Let.isString(options)) options = optionsFromTarget(options);
+    var modal = d3View.viewBase.select('#d3-view-modal');
+    if (!modal.size()) d3View.viewBase.select('body').append('modal').mount(options, function (vm) {
+        return vm.model.$showModal();
+    });else modal.model().$update(options).$showModal();
+}
+
 function optionsFromTarget(selector) {
-    var sel = d3Selection.select(selector);
+    var sel = select(selector);
     if (sel.size() === 1) {
         return {
             modalTitle: textFromTarget(sel.select('modal-title')),
@@ -531,16 +543,25 @@ var index$6 = {
             },
             // select a tab
             $selectTab: function $selectTab(tab) {
-                if (d3Let.isObject(tab)) tab = tab.id;
-                var target = this.targets.get(tab);
+                if (d3Let.isObject(tab)) tab = tab.href;
+
+                var target = this.targets.get(tab),
+                    event = this.$event;
+
                 if (target) {
                     // when local targets are available rather than remote ones
                     this.tabTarget = target;
-                    var event = this.$event;
                     if (event && event.currentTarget) this.currentUrl = event.currentTarget.href;
+                } else {
+                    // use router if available
+                    var router = this.$$view.root.router;
+                    if (router && event && event.currentTarget) {
+                        event.preventDefault();
+                        router.navigate(event.currentTarget.href, true);
+                    }
                 }
                 this.tabItems.forEach(function (item) {
-                    item.active = item.id === tab;
+                    item.active = item.href === tab;
                 });
             }
         };
@@ -569,7 +590,7 @@ var index$6 = {
         this.selectChildren(el).each(function (idx) {
             var sel = self.select(this),
                 id = sel.attr('id') || (items[idx] ? items[idx].id : null);
-            if (id) model.targets.set(id, sel.html());
+            if (id) model.targets.set('#' + id, sel.html());
         });
 
         // model.type = data.type;
@@ -1038,7 +1059,7 @@ Navigo.MATCH_REGEXP_FLAGS = '';
 var index$7 = function (vm, config) {
     config = config || {};
     var events = d3Dispatch.dispatch('before', 'after', 'leave'),
-        baseUrl = removeBackSlash(vm.providers.resolve(config.basePath || '/')),
+        baseUrl = vm.providers.resolve(config.basePath || '/'),
         router = new Navigo(baseUrl);
 
     vm.router = router;
@@ -1047,6 +1068,7 @@ var index$7 = function (vm, config) {
         vm.logDebug('update page links');
         vm.router.updatePageLinks();
     });
+    if (config.routes) config.routes(vm);
 
     router.hooks({
         before: function before(done, params) {
@@ -1068,18 +1090,15 @@ var index$7 = function (vm, config) {
         var root = cm.root;
         if (root === vm) {
             vm.updatePageLinks();
-            if (cm === vm && config.autoResolve !== false) vm.router.resolve();
+            if (cm === vm && config.autoResolve !== false) {
+                vm.logDebug('Resolve route with router');
+                vm.router.resolve();
+            }
         }
     });
 
-    if (config.routes) config.routes(vm);
     return vm;
 };
-
-function removeBackSlash(path) {
-    if (path.substring(path.length - 1) === '/') path = path.substring(0, path.substring - 1);
-    return path;
-}
 
 d3View.viewProviders.compileTemplate = Handlebars.compile;
 

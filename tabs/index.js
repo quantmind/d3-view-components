@@ -33,16 +33,25 @@ export default {
             },
             // select a tab
             $selectTab (tab) {
-                if (isObject(tab)) tab = tab.id;
-                var target = this.targets.get(tab);
+                if (isObject(tab)) tab = tab.href;
+
+                var target = this.targets.get(tab),
+                    event = this.$event;
+
                 if (target) {
                     // when local targets are available rather than remote ones
                     this.tabTarget = target;
-                    var event = this.$event;
                     if (event && event.currentTarget) this.currentUrl = event.currentTarget.href;
+                } else {
+                    // use router if available
+                    var router = this.$$view.root.router;
+                    if (router && event && event.currentTarget) {
+                        event.preventDefault();
+                        router.navigate(event.currentTarget.href, true);
+                    }
                 }
                 this.tabItems.forEach(item => {
-                    item.active = (item.id === tab);
+                    item.active = (item.href === tab);
                 });
             }
         };
@@ -72,7 +81,7 @@ export default {
         this.selectChildren(el).each(function (idx) {
             var sel = self.select(this),
                 id = sel.attr('id') || (items[idx] ? items[idx].id : null);
-            if (id) model.targets.set(id, sel.html());
+            if (id) model.targets.set(`#${id}`, sel.html());
         });
 
         // model.type = data.type;
