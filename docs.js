@@ -1651,7 +1651,7 @@ return Promise$2;
   }
   self.fetch.polyfill = true
 })(typeof self !== 'undefined' ? self : this);
-// d3-view Version 1.1.4. Copyright 2017 quantmind.com.
+// d3-view Version 1.1.5. Copyright 2017 quantmind.com.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -1841,7 +1841,7 @@ var dependencies = {
         "main": "build/d3-transition.js"
     },
     "d3-view": {
-        "version": "1.1.4",
+        "version": "1.1.5",
         "main": "build/d3-view.js"
     },
     "d3-color": {
@@ -1893,7 +1893,7 @@ var sitePlugin = {
     }
 };
 
-var version = "0.0.5";
+var version = "0.0.6";
 
 var DEV = window.development;
 
@@ -1908,6 +1908,7 @@ if (DEV) {
 function componentsPlugin(d3) {
 
     return function (vm) {
+        vm.addComponent('alerts', d3.viewAlert);
         vm.addComponent('sidebar', d3.viewSidebar);
         vm.addComponent('tabs', d3.viewTabs);
         //

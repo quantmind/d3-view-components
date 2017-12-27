@@ -1,13 +1,13 @@
-// d3-view-components Version 0.0.5. Copyright 2017 quantmind.com.
+// d3-view-components Version 0.0.6. Copyright 2017 quantmind.com.
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-view'), require('d3-dispatch'), require('d3-ease'), require('d3-let'), require('d3-transition'), require('handlebars')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'd3-view', 'd3-dispatch', 'd3-ease', 'd3-let', 'd3-transition', 'handlebars'], factory) :
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-view'), require('d3-let'), require('d3-dispatch'), require('d3-ease'), require('d3-transition'), require('handlebars')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'd3-view', 'd3-let', 'd3-dispatch', 'd3-ease', 'd3-transition', 'handlebars'], factory) :
 	(factory((global.d3 = global.d3 || {}),global.d3,global.d3,global.d3,global.d3,global.d3,global.d3));
-}(this, (function (exports,d3View,d3Dispatch,d3Ease,d3Let,d3Transition,Handlebars) { 'use strict';
+}(this, (function (exports,d3View,d3Let,d3Dispatch,d3Ease,d3Transition,Handlebars) { 'use strict';
 
 Handlebars = Handlebars && Handlebars.hasOwnProperty('default') ? Handlebars['default'] : Handlebars;
 
-var version = "0.0.5";
+var version = "0.0.6";
 
 var index = {
 
@@ -50,6 +50,77 @@ d3View.viewEvents.on('component-created', function (vm) {
     if (!vm.parent) vm.model.currentUrl = d3View.viewProviders.location.href;
 });
 
+var levels = {
+    error: 'danger',
+    warn: 'warning'
+};
+
+// component render function
+var index$1 = {
+
+    props: {
+        transitionDuration: 0
+    },
+
+    model: function model() {
+        return {
+            messages: [],
+
+            $messageClass: function $messageClass(message) {
+                return 'alert-' + (levels[message.level] || message.level);
+            },
+            $close: function $close(msg) {
+                var messages = this.messages;
+
+                delete this.$$messageIds[messageKey(msg)];
+
+                for (var i = 0; i < messages.length; ++i) {
+                    if (msg === messages[i]) {
+                        this.messages = messages.slice();
+                        this.messages.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        };
+    },
+    render: function render(props) {
+
+        var model = this.model,
+            messages = model.messages.splice(0),
+            messageIds = {},
+            root = model.isolatedRoot;
+
+        model.$$messageIds = messageIds;
+
+        root.$alertMessage = onMessage;
+
+        messages.forEach(onMessage);
+
+        function onMessage(data) {
+            if (!data) return;
+            if (d3Let.isString(data)) data = { message: data };
+            if (data.message) {
+                if (!data.level) data.level = 'info';
+                var key = messageKey(data),
+                    msg = messageIds[key];
+                if (msg) msg.count += 1;else {
+                    data.count = 1;
+                    msg = model.$new(data);
+                    messageIds[key] = msg;
+                    model.$push('messages', msg);
+                }
+            }
+        }
+
+        return this.renderFromDist('d3-view-components', '/alert/template.html', props);
+    }
+};
+
+function messageKey(msg) {
+    return msg.level + '::' + msg.message;
+}
+
 var COLLAPSE = 'collapse';
 var COLLAPSING = 'd3-collapsing';
 var COLLAPSED = 'collapsed';
@@ -58,7 +129,7 @@ var SHOW = 'show';
 
 var events = d3Dispatch.dispatch('show-start', 'show-end', 'hide-start', 'hide-end');
 
-var index$1 = {
+var index$2 = {
     events: events,
 
     refresh: function refresh() {
@@ -178,7 +249,7 @@ var index$1 = {
     }
 };
 
-var index$2 = {
+var index$3 = {
     refresh: function refresh(model, options) {
         var self = this,
             opts = options && options.$data ? options.$data() : {};
@@ -305,7 +376,7 @@ var toConsumableArray = function (arr) {
   }
 };
 
-var index$3 = {
+var index$4 = {
     refresh: function refresh(model, doc) {
         var self = this,
             r = d3View.viewProviders.require,
@@ -419,7 +490,7 @@ var modalDirective = {
     }
 };
 
-var index$4 = {
+var index$5 = {
     modalComponent: modalComponent,
     modalDirective: modalDirective,
     modalOpen: modalOpen,
@@ -468,7 +539,7 @@ function textFromTarget(sel) {
 //  * collapse directive
 //  * active directive (Optional)
 //
-var index$5 = {
+var index$6 = {
     props: {
         id: 'sidebar',
         brand: 'sidebar',
@@ -527,7 +598,7 @@ var tabClasses = {
 //
 //  * d3-active directive
 //
-var index$6 = {
+var index$7 = {
     props: {
         tabTransitionDuration: 250
     },
@@ -1058,7 +1129,7 @@ Navigo.REPLACE_WILDCARD = '(?:.*)';
 Navigo.FOLLOWED_BY_SLASH_REGEXP = '(?:\/$|$)';
 Navigo.MATCH_REGEXP_FLAGS = '';
 
-function index$7 (vm, config) {
+function index$8 (vm, config) {
     config = config || {};
     var events = d3Dispatch.dispatch('before', 'after', 'leave'),
         baseUrl = vm.providers.resolve(config.basePath || '/'),
@@ -1106,13 +1177,14 @@ d3View.viewProviders.compileTemplate = Handlebars.compile;
 
 exports.viewComponentsVersion = version;
 exports.viewActive = index;
-exports.viewCollapse = index$1;
-exports.viewFlatpickr = index$2;
-exports.viewMarked = index$3;
-exports.viewModal = index$4;
-exports.viewSidebar = index$5;
-exports.viewTabs = index$6;
-exports.viewRouter = index$7;
+exports.viewAlert = index$1;
+exports.viewCollapse = index$2;
+exports.viewFlatpickr = index$3;
+exports.viewMarked = index$4;
+exports.viewModal = index$5;
+exports.viewSidebar = index$6;
+exports.viewTabs = index$7;
+exports.viewRouter = index$8;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
