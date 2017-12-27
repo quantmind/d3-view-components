@@ -350,6 +350,8 @@ var index$3 = {
     }
 };
 
+var select = d3View.viewBase.select;
+
 var modalComponent = {
     props: {
         transitionDuration: 300
@@ -433,8 +435,8 @@ var index$4 = {
 // inject this method to the root model
 function modalOpen(options) {
     if (d3Let.isString(options)) options = optionsFromTarget(options);
-    var modal = d3View.viewBase.select('#d3-view-modal');
-    if (!modal.size()) d3View.viewBase.select('body').append('modal').mount(options, function (vm) {
+    var modal = select('#d3-view-modal');
+    if (!modal.size()) select('body').append('modal').mount(options, function (vm) {
         return vm.model.$showModal();
     });else modal.model().$update(options).$showModal();
 }
@@ -1056,7 +1058,7 @@ Navigo.REPLACE_WILDCARD = '(?:.*)';
 Navigo.FOLLOWED_BY_SLASH_REGEXP = '(?:\/$|$)';
 Navigo.MATCH_REGEXP_FLAGS = '';
 
-var index$7 = function (vm, config) {
+function index$7 (vm, config) {
     config = config || {};
     var events = d3Dispatch.dispatch('before', 'after', 'leave'),
         baseUrl = vm.providers.resolve(config.basePath || '/'),
@@ -1098,7 +1100,7 @@ var index$7 = function (vm, config) {
     });
 
     return vm;
-};
+}
 
 d3View.viewProviders.compileTemplate = Handlebars.compile;
 

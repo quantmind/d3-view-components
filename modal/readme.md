@@ -1,4 +1,3 @@
-
 ## Modal Plugin
 
 Use the modal plugin to add dialogs to your site for lightboxes, user notifications, or custom content.

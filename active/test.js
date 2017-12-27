@@ -1,7 +1,6 @@
 import {view} from 'd3-view';
-import {isFunction} from 'd3-let';
 
-import {test, getWaiter} from '../.ci/utils.js';
+import {test, getWaiter} from '../_ci/utils.js';
 import {viewActive} from '../index';
 
 

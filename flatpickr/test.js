@@ -1,6 +1,6 @@
 import {view} from 'd3-view';
 
-import {test, getWaiter} from '../.ci/utils.js';
+import {test, getWaiter} from '../_ci/utils.js';
 import {viewFlatpickr} from '../index';
 
 

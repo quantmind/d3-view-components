@@ -1,7 +1,7 @@
 import {view} from 'd3-view';
 import {isFunction} from 'd3-let';
 
-import {test, nextTick} from '../.ci/utils.js';
+import {test, nextTick} from '../_ci/utils.js';
 import {viewModal} from '../index';
 
 
@@ -22,7 +22,7 @@ describe('viewMarked -', () => {
             title: "test",
             body: "this is a test for the modal"
         });
-        //await nextTick();
+        await nextTick();
         //var model = vm.select('#d3-view-modal').model();
         //expect(model.showModal).toBe(true);
     });
