@@ -17,6 +17,7 @@ if (DEV) {
 function componentsPlugin (d3) {
 
     return function (vm) {
+        vm.addComponent('alerts', d3.viewAlert);
         vm.addComponent('sidebar', d3.viewSidebar);
         vm.addComponent('tabs', d3.viewTabs);
         //
