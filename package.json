@@ -1,5 +1,5 @@
 {
-    "version": "0.0.4",
+    "version": "0.0.5",
     "name": "d3-view-components",
     "title": "d3-view Components",
     "description": "Reusable d3-view components",
@@ -84,7 +84,7 @@
         "docs": "rollup -c _ci/rollup.config.js && view-require -c _ci/require.config.js -s && uglifyjs build/docs.js -c -m -o build/docs.min.js && _ci/build-docs.js && node-sass _ci/docs.scss build/docs.css --include-path node_modules --output-style compressed",
         "serve": "http-server build/",
         "prepare": "npm run-script build",
-        "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git tag -am \"Release $VERSION.\" v${VERSION} && git push --tags && mkdir -p ../giottojs.org/latest && mkdir -p ../giottojs.org/d3-view/${VERSION} && cp build/* ../giottojs.org/d3-view/${VERSION}/ && cp build/* ../giottojs.org/latest/ && cd ../giottojs.org && git add d3-view/${VERSION} latest && git commit -a -m \"d3-view ${VERSION}\" && git push",
+        "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git tag -am \"Release $VERSION.\" v${VERSION} && git push --tags",
         "release": "publish"
     }
 }
