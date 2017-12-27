@@ -1,4 +1,4 @@
-import {test} from '../.ci/utils.js';
+import {test} from '../_ci/utils.js';
 import {viewCollapse} from '../index';
 
 

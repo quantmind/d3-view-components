@@ -3,6 +3,9 @@ import {isString} from 'd3-let';
 import {viewWarn, viewBase} from 'd3-view';
 
 
+const select = viewBase.select;
+
+
 const modalComponent = {
     props: {
         transitionDuration: 300
@@ -94,9 +97,9 @@ export default {
 // inject this method to the root model
 function modalOpen (options) {
     if (isString(options)) options = optionsFromTarget(options);
-    var modal = viewBase.select('#d3-view-modal');
+    var modal = select('#d3-view-modal');
     if (!modal.size())
-        viewBase.select('body').append('modal').mount(options, vm => vm.model.$showModal());
+        select('body').append('modal').mount(options, vm => vm.model.$showModal());
     else
         modal.model().$update(options).$showModal();
 }

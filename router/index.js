@@ -46,10 +46,4 @@ export default function (vm, config) {
     });
 
     return vm;
-};
-
-
-function removeBackSlash (path) {
-    if (path.substring(path.length-1) === '/') path = path.substring(0, path.substring-1);
-    return path;
 }

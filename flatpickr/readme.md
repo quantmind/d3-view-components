@@ -1,4 +1,3 @@
-
 ## Flatpickr Directive
 
 This directive integrates [flatpickr][] datetime picker with [d3-view][].

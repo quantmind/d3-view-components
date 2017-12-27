@@ -42,15 +42,3 @@ export default {
 viewEvents.on('component-created', vm => {
     if (!vm.parent) vm.model.currentUrl = viewProviders.location.href;
 });
-
-
-function r (url, baseUrl) {
-    if (url.substring(0, baseUrl.length) === baseUrl) url = url.substring(baseUrl.length);
-    return removeFrontSlash(url);
-}
-
-
-function removeFrontSlash (path) {
-    if (path.substring(0, 1) === '/') path = path.substring(1);
-    return path;
-}

@@ -13,7 +13,7 @@ const
     pkg = require('../package.json'),
     modules = require('./modules.js');
 
-const srcPath = '.ci';
+const srcPath = '_ci';
 const sitePath = 'build';
 
 const templateFile = `${srcPath}/index.html.tpl`;
