@@ -1,11 +1,11 @@
-import {viewProviders, viewSlugify} from 'd3-view';
+import {viewSlugify} from 'd3-view';
 
 
 export default {
 
     refresh (model, doc) {
         var self = this,
-            r = viewProviders.require,
+            r = this.providers.require,
             marked, hl;
 
         self.sel.classed('markdown-body', true);

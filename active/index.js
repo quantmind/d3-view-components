@@ -1,4 +1,4 @@
-import {viewEvents, viewProviders} from 'd3-view';
+import {viewEvents} from 'd3-view';
 
 
 export default {
@@ -40,5 +40,5 @@ export default {
 //
 // Make sure the currentUrl attribute is reactive
 viewEvents.on('component-created', vm => {
-    if (!vm.parent) vm.model.currentUrl = viewProviders.location.href;
+    if (!vm.parent) vm.model.currentUrl = vm.providers.location.href;
 });
