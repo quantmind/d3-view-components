@@ -2,7 +2,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-view'), require('d3-let'), require('d3-dispatch'), require('d3-ease'), require('d3-transition'), require('handlebars')) :
 	typeof define === 'function' && define.amd ? define(['exports', 'd3-view', 'd3-let', 'd3-dispatch', 'd3-ease', 'd3-transition', 'handlebars'], factory) :
-	(factory((global.d3 = global.d3 || {}),global.d3,global.d3,global.d3,global.d3,global.d3,global.d3));
+	(factory((global.d3 = global.d3 || {}),global.d3,global.d3,global.d3,global.d3,global.d3,global.handlebars));
 }(this, (function (exports,d3View,d3Let,d3Dispatch,d3Ease,d3Transition,Handlebars) { 'use strict';
 
 Handlebars = Handlebars && Handlebars.hasOwnProperty('default') ? Handlebars['default'] : Handlebars;
@@ -121,6 +121,77 @@ function messageKey(msg) {
     return msg.level + '::' + msg.message;
 }
 
+var sep = new RegExp('[^,]*$');
+var rep = new RegExp('^.+,*|');
+
+var multiple = {
+    filter: function filter(text, input) {
+        return window.Awesomplete.FILTER_CONTAINS(text, input.match(sep)[0]);
+    },
+    item: function item(text, input) {
+        return window.Awesomplete.ITEM(text, input.match(sep)[0]);
+    },
+    replace: function replace(text) {
+        var before = this.input.value.match(rep)[0];
+        this.input.value = before + text + ", ";
+    }
+};
+
+var index$2 = {
+    refresh: function refresh(model, awe) {
+        if (!this.awe) {
+            var self = this;
+            this.awe = true;
+            awe = awe || {};
+            this.htmlAttribute(awe, 'multiple');
+
+            this.providers.require('awesomplete').catch(function () {
+                if (!window.Awesomplete) return self.logError('Could not load awesomplete');
+                self.build(model, awe);
+            });
+        }
+    },
+    build: function build(model, awe) {
+        var self = this,
+            cfg = self.getConfig(awe);
+
+        if (awe.url) {
+            this.json(awe.url).then(function (response) {
+                var data = response.data;
+                model.$emit('autoCompleteData', data);
+                cfg.list = data;
+                self.awe = new window.Awesomplete(self.el, cfg);
+            });
+        } else {
+            self.awe = new window.Awesomplete(self.el, cfg);
+        }
+    },
+    getConfig: function getConfig(awe) {
+        var cfg = {
+            minChars: awe.minChars || 2
+        };
+        if (awe.label || awe.value) {
+            if (!awe.label) awe.label = 'label';
+            if (!awe.value) awe.value = 'value';
+
+            cfg.data = function (d) {
+                return {
+                    label: d[awe.label],
+                    value: d[awe.value]
+                };
+            };
+        }
+        if (awe.multiple) d3Let.assign(cfg, multiple);
+        return cfg;
+    },
+    htmlAttribute: function htmlAttribute(o, name) {
+        if (o[name] === undefined) {
+            var value = this.sel.attr('data-' + name);
+            if (value !== undefined) o[name] = value === null ? false : value || true;
+        }
+    }
+};
+
 var COLLAPSE = 'collapse';
 var COLLAPSING = 'd3-collapsing';
 var COLLAPSED = 'collapsed';
@@ -129,7 +200,7 @@ var SHOW = 'show';
 
 var events = d3Dispatch.dispatch('show-start', 'show-end', 'hide-start', 'hide-end');
 
-var index$2 = {
+var index$3 = {
     events: events,
 
     refresh: function refresh() {
@@ -249,7 +320,7 @@ var index$2 = {
     }
 };
 
-var index$3 = {
+var index$4 = {
     refresh: function refresh(model, options) {
         var self = this,
             opts = options && options.$data ? options.$data() : {};
@@ -376,7 +447,7 @@ var toConsumableArray = function (arr) {
   }
 };
 
-var index$4 = {
+var index$5 = {
     refresh: function refresh(model, doc) {
         var self = this,
             r = d3View.viewProviders.require,
@@ -490,7 +561,7 @@ var modalDirective = {
     }
 };
 
-var index$5 = {
+var index$6 = {
     modalComponent: modalComponent,
     modalDirective: modalDirective,
     modalOpen: modalOpen,
@@ -539,7 +610,7 @@ function textFromTarget(sel) {
 //  * collapse directive
 //  * active directive (Optional)
 //
-var index$6 = {
+var index$7 = {
     props: {
         id: 'sidebar',
         brand: 'sidebar',
@@ -598,7 +669,7 @@ var tabClasses = {
 //
 //  * d3-active directive
 //
-var index$7 = {
+var index$8 = {
     props: {
         tabTransitionDuration: 250
     },
@@ -1129,7 +1200,7 @@ Navigo.REPLACE_WILDCARD = '(?:.*)';
 Navigo.FOLLOWED_BY_SLASH_REGEXP = '(?:\/$|$)';
 Navigo.MATCH_REGEXP_FLAGS = '';
 
-function index$8 (vm, config) {
+function index$9 (vm, config) {
     config = config || {};
     var events = d3Dispatch.dispatch('before', 'after', 'leave'),
         baseUrl = vm.providers.resolve(config.basePath || '/'),
@@ -1178,13 +1249,14 @@ d3View.viewProviders.compileTemplate = Handlebars.compile;
 exports.viewComponentsVersion = version;
 exports.viewActive = index;
 exports.viewAlert = index$1;
-exports.viewCollapse = index$2;
-exports.viewFlatpickr = index$3;
-exports.viewMarked = index$4;
-exports.viewModal = index$5;
-exports.viewSidebar = index$6;
-exports.viewTabs = index$7;
-exports.viewRouter = index$8;
+exports.viewAutocomplete = index$2;
+exports.viewCollapse = index$3;
+exports.viewFlatpickr = index$4;
+exports.viewMarked = index$5;
+exports.viewModal = index$6;
+exports.viewSidebar = index$7;
+exports.viewTabs = index$8;
+exports.viewRouter = index$9;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

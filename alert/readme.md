@@ -54,17 +54,17 @@ await vm.mount('body');
 
 ### Javascript Usage
 
-To display a message
+To display a message, from a model in a component
 ```javascript
-vm.model.$alertMessage('Hi!');
+model.$emit('alertMessage', 'Hi!');
 ```
 To display messages with different levels:
 ```javascript
-vm.model.$alertMessage({
+model.$emit('alertMessage', {
     message: '<strong>Warning!></strong> This is a wrning message'
     level: 'warning'
 });
-vm.model.$alertMessage({
+model.$emit('alertMessage', {
     message: '<strong>Danger!></strong> Something very wrong'
     level: 'danger'
 });

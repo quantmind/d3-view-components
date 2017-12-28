@@ -1820,6 +1820,10 @@ var dependencies = {
         "version": "4.0",
         "main": "dist/handlebars.min.js"
     },
+    "awesomplete": {
+        "version": "1.1",
+        "main": "awesomplete.js"
+    },
     "d3-dispatch": {
         "version": "1.0",
         "main": "build/d3-dispatch.js"
@@ -1913,6 +1917,7 @@ function componentsPlugin(d3) {
         vm.addComponent('tabs', d3.viewTabs);
         //
         vm.addDirective('active', d3.viewActive);
+        vm.addDirective('autocomplete', d3.viewAutocomplete);
         vm.addDirective('collapse', d3.viewCollapse);
         vm.addDirective('flatpickr', d3.viewFlatpickr);
         vm.addDirective('marked', d3.viewMarked);
