@@ -47,7 +47,7 @@ var index = {
 //
 // Make sure the currentUrl attribute is reactive
 d3View.viewEvents.on('component-created', function (vm) {
-    if (!vm.parent) vm.model.currentUrl = d3View.viewProviders.location.href;
+    if (!vm.parent) vm.model.currentUrl = vm.providers.location.href;
 });
 
 var levels = {
@@ -325,7 +325,7 @@ var index$4 = {
         var self = this,
             opts = options && options.$data ? options.$data() : {};
 
-        d3View.viewProviders.require('flatpickr').then(function (flatpickr) {
+        this.providers.require('flatpickr').then(function (flatpickr) {
             if (self.fp) self.fp.destroy();
             self.sel.on('input', null);
             self.sel.on('change', null);
@@ -450,7 +450,7 @@ var toConsumableArray = function (arr) {
 var index$5 = {
     refresh: function refresh(model, doc) {
         var self = this,
-            r = d3View.viewProviders.require,
+            r = this.providers.require,
             marked,
             hl;
 
