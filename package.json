@@ -24,6 +24,7 @@
     "module": "index",
     "jsnext:main": "index",
     "dependencies": {
+        "awesomplete": "1.1",
         "d3-dispatch": "1.0",
         "d3-ease": "1.0",
         "d3-let": "0.3",
@@ -76,7 +77,8 @@
         "test": "npm run-script lint && npm run-script unit",
         "rollup": "cp ./node_modules/navigo/src/index.js router/navigo.js && rollup -c --banner \"$(preamble)\"",
         "dev": "rollup -c -w",
-        "build": "npm run-script rollup && uglifyjs --preamble \"$(preamble)\" build/d3-view-components.js -c -m -o build/d3-view-components.min.js && node-sass index.scss build/d3-view-components.css --output-style compressed",
+        "css": "node-sass index.scss build/d3-view-components.css --include-path node_modules --output-style compressed",
+        "build": "npm run-script rollup && uglifyjs --preamble \"$(preamble)\" build/d3-view-components.js -c -m -o build/d3-view-components.min.js && npm run-script css",
         "unit": "karma start _ci/karma.unit.js",
         "cover": "karma start _ci/karma.cover.js",
         "debug": "karma start _ci/karma.debug.js",

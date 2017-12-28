@@ -3,8 +3,11 @@ import babel from 'rollup-plugin-babel';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 
 
-const pkg = require('./package.json');
-const external = Object.keys(pkg.dependencies);
+const
+    pkg = require('./package.json'),
+    d3External = Object.keys(pkg.dependencies).filter(name => name.substring(0, 3) === 'd3-'),
+    external = d3External.concat(['handlebars']),
+    globals = d3External.reduce((g, name) => {g[name] = 'd3'; return g;}, {handlebars: 'handlebars'});
 
 
 export default {
@@ -16,7 +19,7 @@ export default {
         extend: true,
         sourcemap: true,
         name: 'd3',
-        globals: external.reduce((g, name) => {g[name] = 'd3'; return g;}, {})
+        globals: globals
     },
     plugins: [
         json(),

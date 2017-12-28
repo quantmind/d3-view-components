@@ -22,6 +22,7 @@ function componentsPlugin (d3) {
         vm.addComponent('tabs', d3.viewTabs);
         //
         vm.addDirective('active', d3.viewActive);
+        vm.addDirective('autocomplete', d3.viewAutocomplete);
         vm.addDirective('collapse', d3.viewCollapse);
         vm.addDirective('flatpickr', d3.viewFlatpickr);
         vm.addDirective('marked', d3.viewMarked);
