@@ -1651,7 +1651,7 @@ return Promise$2;
   }
   self.fetch.polyfill = true
 })(typeof self !== 'undefined' ? self : this);
-// d3-view Version 1.1.5. Copyright 2017 quantmind.com.
+// d3-view Version 1.1.6. Copyright 2017 quantmind.com.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -1845,7 +1845,7 @@ var dependencies = {
         "main": "build/d3-transition.js"
     },
     "d3-view": {
-        "version": "1.1.5",
+        "version": "1.1.6",
         "main": "build/d3-view.js"
     },
     "d3-color": {
@@ -1897,7 +1897,7 @@ var sitePlugin = {
     }
 };
 
-var version = "0.0.6";
+var version = "0.1.0";
 
 var DEV = window.development;
 
@@ -1943,6 +1943,8 @@ function componentsPlugin(d3) {
             var mod = urlArgs ? urlArgs.module : null,
                 path = mod ? '/' + mod + '/readme.md' : '/readme.md';
             vm.renderFromDist('d3-view-components', path, null, false).then(function (md) {
+                vm.select('title').html(mod ? 'd3-view - ' + mod : 'd3-view components');
+                vm.model.navbarTitle = mod;
                 vm.model.docs = md;
             });
         }
@@ -1954,6 +1956,7 @@ window.d3.require('d3-view-components', 'd3-view').then(function (d3) {
     d3.view({
         model: {
             docs: '',
+            navbarTitle: '',
             navbarItems: [{
                 icon: 'ion-social-github',
                 href: 'https://github.com/quantmind/d3-view-components',

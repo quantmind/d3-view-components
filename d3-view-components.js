@@ -1,4 +1,4 @@
-// d3-view-components Version 0.0.6. Copyright 2017 quantmind.com.
+// d3-view-components Version 0.1.0. Copyright 2017 quantmind.com.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-view'), require('d3-let'), require('d3-dispatch'), require('d3-ease'), require('d3-transition'), require('handlebars')) :
 	typeof define === 'function' && define.amd ? define(['exports', 'd3-view', 'd3-let', 'd3-dispatch', 'd3-ease', 'd3-transition', 'handlebars'], factory) :
@@ -7,7 +7,7 @@
 
 Handlebars = Handlebars && Handlebars.hasOwnProperty('default') ? Handlebars['default'] : Handlebars;
 
-var version = "0.0.6";
+var version = "0.1.0";
 
 var index = {
 

@@ -23,7 +23,7 @@
   </div>
   <div class="content-wrapper">
     <nav class="{{ classes }}">
-      <a class="navbar-toggler btn btn-default mr-1" href="#"
+      <a class="navbar-toggler btn btn-default mr-2" href="#"
         aria-controls="{{ id }}"
         aria-expanded="true"
         aria-label="toggle sidebar"
@@ -31,10 +31,10 @@
         d3-html="sidebarToggle"
         d3-collapse></a>
       <a class="navbar-brand mr-auto"
-        d3-if="brand"
-        d3-attr-href="brandUrl"
-        d3-html="brand"
-        data-transition-duration=250></a>
+        d3-if="navbarTitle"
+        d3-attr-href="navbarTitleUrl"
+        d3-html="navbarTitle"
+        data-transition-duration=150></a>
       <ul class="nav navbar-nav">
         <li d3-for="item in navbarItems" class="nav-item">
           <a class="nav-link"
