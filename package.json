@@ -1,7 +1,7 @@
 {
-    "version": "0.0.6",
+    "version": "0.1.0",
     "name": "d3-view-components",
-    "title": "d3-view Components",
+    "title": "d3-view components",
     "description": "Reusable d3-view components",
     "author": {
         "name": "quantmind.com",
@@ -30,7 +30,7 @@
         "d3-let": "0.3",
         "d3-selection": "1.2",
         "d3-transition": "1.1",
-        "d3-view": "1.1.5",
+        "d3-view": "1.1.6",
         "handlebars": "4.0"
     },
     "devDependencies": {

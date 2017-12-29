@@ -48,6 +48,8 @@ function componentsPlugin (d3) {
             var mod = urlArgs ? urlArgs.module : null,
                 path = mod ? `/${mod}/readme.md` : '/readme.md';
             vm.renderFromDist('d3-view-components', path, null, false).then(md => {
+                vm.select('title').html(mod ? `d3-view - ${mod}` : 'd3-view components');
+                vm.model.navbarTitle = mod;
                 vm.model.docs = md;
             });
         }
@@ -60,6 +62,7 @@ window.d3.require('d3-view-components', 'd3-view').then(d3 => {
     d3.view({
         model: {
             docs: '',
+            navbarTitle: '',
             navbarItems: [
                 {
                     icon: 'ion-social-github',

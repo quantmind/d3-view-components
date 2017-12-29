@@ -20,6 +20,8 @@
         data-brand-url="/"
         data-primary-items='{{ components }}'
         data-navbar-items="navbarItems"
+        data-navbar-title="navbarTitle"
+        data-navbar-title-Url="currentUrl"
         data-item-attr="data-navigo">
         <div class="docs" d3-marked="docs"></div>
     </sidebar>

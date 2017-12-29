@@ -20,9 +20,10 @@ The sidebar can be customized via several reactive properties.
 
 * ``primaryItems``: list of [navigation items][] located in the sidebar
 * ``secondaryItems``: list of [navigation items][] located in the sidebar, below the ``primaryItems``
+* ``sidebarToggle``: the sidebar toggle element which by default is ```<i class="ion-android-menu"></i>```
 * ``navbarItems``: list of [navigation items][] located in the top navbar
 * ``navbarTitle``: Title to display in the top navbar
-* ``sidebarToggle``: the sidebar toggle element which by default is ```<i class="ion-android-menu"></i>```
+* ``navbarTitleUrl``: url for the navbar title
 
 ## Navigation item
 

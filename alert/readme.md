@@ -17,7 +17,7 @@ Same messages with same level are not repeated, instead a counter is added.
 </div>
 <br><br>
 
-This example is created with the markup and the [/alert/form-example.json](/alert/form-example.json)
+This example is created with the below markup and the [/alert/form-example.json](/alert/form-example.json) form schema.
 ```html
 <div class="container-float">
     <div class="row">
@@ -51,6 +51,14 @@ await vm.mount('body');
 <isolated><alerts data-messages='["simple message"]'></alerts></isolated>
 ```
 <isolated><alerts data-messages='["simple message"]'></alerts></isolated>
+
+The ``alerts`` component finds the first ``isolatedRoot`` of the model and
+add the ``$alertMessage`` hook which listen for ``alertMessage`` custom events
+form all its children models.
+
+In the above example, the ``isolated`` component make sure the view model
+is isolated to that example so no other messages triggered anywhere
+else in the application are displayed in the child ``alerts`` component.
 
 ### Javascript Usage
 
