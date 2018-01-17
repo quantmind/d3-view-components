@@ -1,5 +1,5 @@
-import {test} from '../_ci/utils.js';
-import {viewCollapse} from '../index';
+import {test} from '../../dev/utils.js';
+import {viewCollapse} from '../../build/d3-view-components';
 
 
 describe('Collapse -', () => {

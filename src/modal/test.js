@@ -1,8 +1,8 @@
 import {view} from 'd3-view';
 import {isFunction} from 'd3-let';
 
-import {test, nextTick} from '../_ci/utils.js';
-import {viewModal} from '../index';
+import {test, nextTick} from '../../dev/utils.js';
+import {viewModal} from '../../build/d3-view-components';
 
 
 describe('viewMarked -', () => {

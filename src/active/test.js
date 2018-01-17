@@ -1,7 +1,7 @@
 import {view} from 'd3-view';
 
-import {test, getWaiter} from '../_ci/utils.js';
-import {viewActive} from '../index';
+import {test, getWaiter} from '../../dev/utils.js';
+import {viewActive} from '../../build/d3-view-components';
 
 
 describe('viewActive -', () => {

@@ -1,5 +1,7 @@
 import {isString} from 'd3-let';
 
+import tpl from './template.html';
+
 
 const levels = {
     error: 'danger',
@@ -68,7 +70,7 @@ export default {
             }
         }
 
-        return this.renderFromDist('d3-view-components', '/alert/template.html', props);
+        return this.viewElement(tpl, props);
     }
 };
 

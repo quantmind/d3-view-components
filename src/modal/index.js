@@ -2,6 +2,8 @@ import {easeExpOut} from 'd3-ease';
 import {isString} from 'd3-let';
 import {viewWarn, viewBase} from 'd3-view';
 
+import tpl from './template.html';
+
 
 const select = viewBase.select;
 
@@ -41,7 +43,7 @@ const modalComponent = {
     },
 
     render: function (props) {
-        return this.renderFromDist('d3-view-components', '/modal/template.html', props);
+        return this.viewElement(tpl, props);
     }
 
 };
