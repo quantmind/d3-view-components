@@ -18,6 +18,7 @@ function componentsPlugin (d3) {
 
     return function (vm) {
         vm.addComponent('alerts', d3.viewAlert);
+        vm.addComponent('markdown', d3.viewMarked);
         vm.addComponent('sidebar', d3.viewSidebar);
         vm.addComponent('tabs', d3.viewTabs);
         //
@@ -25,11 +26,8 @@ function componentsPlugin (d3) {
         vm.addDirective('autocomplete', d3.viewAutocomplete);
         vm.addDirective('collapse', d3.viewCollapse);
         vm.addDirective('flatpickr', d3.viewFlatpickr);
-        vm.addDirective('marked', d3.viewMarked);
         //
-        vm.use(d3.viewModal);
-        //
-        d3.viewRouter(vm, {routes});
+        vm.use(d3.viewModal).use(d3.viewRouter);
         //
         // disable caching in dev
         if (DEV) {
@@ -37,23 +35,6 @@ function componentsPlugin (d3) {
             vm.providers.setDebug();
         }
     };
-
-    function routes (vm) {
-        vm.router.on({
-            '/': getMarked,
-            '/:module': getMarked
-        });
-
-        function getMarked (urlArgs) {
-            var mod = urlArgs ? urlArgs.module : null,
-                path = mod ? `/${mod}/readme.md` : '/readme.md';
-            vm.renderFromDist('d3-view-components', path, null, false).then(md => {
-                vm.select('title').html(mod ? `d3-view - ${mod}` : 'd3-view components');
-                vm.model.navbarTitle = mod;
-                vm.model.docs = md;
-            });
-        }
-    }
 }
 
 
@@ -71,11 +52,9 @@ window.d3.require('d3-view-components', 'd3-view').then(d3 => {
                 }
             ]
         }
-    })
-    .use(componentsPlugin(d3))
-    .use(sitePlugin)
-    .use(d3.viewForms)
-    .use(d3.viewBootstrapForms)
-    .mount('body');
-
+    }).use(componentsPlugin(d3))
+        .use(sitePlugin)
+        .use(d3.viewForms)
+        .use(d3.viewBootstrapForms)
+        .mount('body');
 });

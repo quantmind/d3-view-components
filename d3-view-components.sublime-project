@@ -14,13 +14,7 @@
 			"path": "."
 		},
 		{
-			"path": "/Users/lsbardel/workspace/lux"
-		},
-		{
 			"path": "/Users/lsbardel/workspace/d3-view"
-		},
-		{
-			"path": "/Users/lsbardel/workspace/d3-view-components"
 		},
 		{
 			"path": "/Users/lsbardel/workspace/d3-visualize"
@@ -29,7 +23,7 @@
 			"path": "/Users/lsbardel/workspace/dev-tools"
 		},
 		{
-			"path": "/Users/lsbardel/workspace/pulsar-queue"
+			"path": "/Users/lsbardel/workspace/d3-let"
 		}
 	],
 	"settings":

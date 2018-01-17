@@ -23,7 +23,10 @@
         data-navbar-title="navbarTitle"
         data-navbar-title-Url="currentUrl"
         data-item-attr="data-navigo">
-        <div class="docs" d3-marked="docs"></div>
+            <routes>
+                <markdown-content data-path="/"/>
+                <markdown-content data-path="/:marked"/>
+            </routes>
     </sidebar>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110136266-2"></script>

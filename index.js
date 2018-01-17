@@ -2,6 +2,7 @@ export {version as viewComponentsVersion} from './package.json';
 export {default as viewActive} from './active/index';
 export {default as viewAlert} from './alert/index';
 export {default as viewAutocomplete} from './autocomplete/index';
+export {default as viewCard} from './card/index';
 export {default as viewCollapse} from './collapse/index';
 export {default as viewFlatpickr} from './flatpickr/index';
 export {default as viewMarked} from './marked/index';

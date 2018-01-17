@@ -52,4 +52,26 @@ Allow multiple values, comma separated
 <input type="text" d3-autocomplete='{"url": "https://unpkg.com/country-list/data.json", "label": "name", "value": "code"}'>
 <br><br>
 
+#### In a form
+
+It is easy to include a date picker in a form. For example, using the
+[json schema](/flatpickr/form-example.json):
+
+```html
+<d3form data-schema='/autocomplete/form-example.json'></d3form>
+```
+<div class="container-float">
+    <form-data class="row">
+        <div class="col-sm-6">
+            <d3form data-schema='/autocomplete/form-example.json'></d3form>
+        </div>
+        <div class="col-sm-6">
+            <div d3-marked="formData"></div>
+        </div>
+    </form-data>
+</div>
+<br><br>
+
+
 [awesomplete]: http://leaverou.github.io/awesomplete/
+

@@ -3,26 +3,44 @@ import {viewSlugify} from 'd3-view';
 
 export default {
 
-    refresh (model, doc) {
-        var self = this,
-            r = this.providers.require,
-            marked, hl;
-
-        self.sel.classed('markdown-body', true);
-        Promise.all([r('marked'), r('highlightjs')]).then(libs => {
-            [marked, hl] = libs;
-            if (!self._markedOptions)
-                self._markedOptions = self.markedOptions(model, marked, hl);
-            self.sel.html(doc ? marked(doc, self._markedOptions) : '');
-            model.$emit('markedElement', self.el);
-            self.selectChildren().mount();
-        });
+    props: {
+        source: null,
+        anchorIcon: 'ion-ios-grid-view-outline'
     },
 
-    markedOptions (model, marked, hl) {
+    render (props, attrs, el) {
+        const
+            self = this,
+            r = this.providers.require,
+            classes = attrs.class || 'markdown';
+
+        let marked, hl;
+
+
+        return Promise.all([r('marked'), r('highlightjs')]).then(libs => {
+            [marked, hl] = libs;
+
+            if (!self._markedOptions)
+                self._markedOptions = self.markedOptions(props, marked, hl);
+
+            if (props.source)
+                return this.fetchText(props.source).then(response => build(response.data));
+            else
+                return build(this.select(el).text());
+
+        });
+
+
+        function build (source) {
+            source = source ? marked(source, self._markedOptions) : '';
+            return self.createElement('div').attr('class', classes).html(source);
+        }
+    },
+
+    markedOptions (props, marked, hl) {
         if (this._markedOptions) return self._markedOptions;
         var renderer = new marked.Renderer(),
-            icon = model.markedAnchorIcon || 'ion-ios-grid-view-outline';
+            icon = props.anchorIcon;
 
         renderer.heading = heading;
 

@@ -9,7 +9,7 @@ export default {
             self.sel.on('input', null);
             self.sel.on('change', null);
             model.$emit('flatpickr', opts);
-            self.fp = flatpickr(self.el, opts);
+            self.fp = flatpickr.default(self.el, opts);
         });
     },
 
@@ -20,4 +20,3 @@ export default {
         }
     }
 };
-
