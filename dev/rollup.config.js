@@ -1,16 +1,17 @@
-import json from 'rollup-plugin-json';
-import babel from 'rollup-plugin-babel';
-import sourcemaps from 'rollup-plugin-sourcemaps';
+const json = require('rollup-plugin-json');
+const babel = require('rollup-plugin-babel');
+const string = require('rollup-plugin-string');
+const sourcemaps = require('rollup-plugin-sourcemaps');
 
 
 const
-    pkg = require('./package.json'),
+    pkg = require('../package.json'),
     d3External = Object.keys(pkg.dependencies).filter(name => name.substring(0, 3) === 'd3-'),
     external = d3External.concat(['handlebars']),
     globals = d3External.reduce((g, name) => {g[name] = 'd3'; return g;}, {handlebars: 'handlebars'});
 
 
-export default {
+module.exports = {
     input: 'index.js',
     external: external,
     output: {
@@ -23,6 +24,9 @@ export default {
     },
     plugins: [
         json(),
+        string({
+            include: 'src/**/*.html'
+        }),
         babel({
             babelrc: false,
             plugins: ['external-helpers'],

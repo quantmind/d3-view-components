@@ -1,6 +1,8 @@
 import {isObject, isString} from 'd3-let';
 import {viewSlugify} from 'd3-view';
 
+import tpl from './template.html';
+
 
 const tabClasses = {
     none: null,
@@ -85,7 +87,7 @@ export default {
         });
 
         // model.type = data.type;
-        return this.renderFromDist('d3-view-components', '/tabs/template.html', props);
+        return this.viewElement(tpl, props);
     },
 
     mounted () {

@@ -1,5 +1,7 @@
 import {viewModel} from 'd3-view';
 
+import tpl from './template.html';
+
 //
 //  Reusable Sidebar component
 //  ================================
@@ -40,7 +42,7 @@ export default {
         asItems(model, model.secondaryItems);
         asItems(model, model.navbarItems);
         props.sidebarContent = this.select(el).html();
-        return this.renderFromDist('d3-view-components', '/sidebar/template.html', props);
+        return this.viewElement(tpl, props);
     }
 };
 

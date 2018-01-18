@@ -4,7 +4,7 @@ var fs = require('fs'),
     components = [],
     pages = {};
 
-fs.readdirSync('.').forEach(name => {
+fs.readdirSync('./src').forEach(name => {
     var n = name.length-3,
         target;
 
@@ -13,7 +13,7 @@ fs.readdirSync('.').forEach(name => {
         name = name === 'readme.md' ? 'index' : name.substring(0, n);
         pages[target] = {name: name};
     } else if (name !== 'build') {
-        target = './' + name + '/readme.md';
+        target = './src/' + name + '/readme.md';
         if (fs.existsSync(target)) {
             components.push(name);
             pages[name] = {

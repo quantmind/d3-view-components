@@ -1,7 +1,7 @@
 import {view} from 'd3-view';
 
-import {test, getWaiter} from '../_ci/utils.js';
-import {viewActive} from '../index';
+import {test, getWaiter} from '../../dev/utils.js';
+import {viewActive} from '../../build/d3-view-components';
 
 
 describe('viewActive -', () => {
@@ -23,6 +23,7 @@ describe('viewActive -', () => {
     });
 
     test ('currentUrl', async () => {
+        expect(vm).toBeTruthy();
         var el = vm.select('body').append('div').html('<a href="/foo" d3-active>foo link</a>');
         await vm.mount(el);
         vm.sel.remove();
