@@ -10,7 +10,7 @@ module.exports = {
         paths: [
             {
                 slug: "docs",
-                path: "docs/",
+                path: "../src",
                 template: "sidenav",
                 context: {
 

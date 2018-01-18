@@ -80,4 +80,4 @@ workflows:
             - coverage
           filters:
             branches:
-              only: master
+              only: site
