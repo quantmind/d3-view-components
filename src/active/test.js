@@ -23,6 +23,7 @@ describe('viewActive -', () => {
     });
 
     test ('currentUrl', async () => {
+        expect(vm).toBeTruthy();
         var el = vm.select('body').append('div').html('<a href="/foo" d3-active>foo link</a>');
         await vm.mount(el);
         vm.sel.remove();
