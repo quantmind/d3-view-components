@@ -42,7 +42,7 @@ export default {
         asItems(model, model.secondaryItems);
         asItems(model, model.navbarItems);
         props.sidebarContent = this.select(el).html();
-        return this.viewElement(tpl, props);
+        return tpl;
     }
 };
 
