@@ -1,7 +1,6 @@
 import {view} from 'd3-view';
 
-import {test} from '../../dev/utils.js';
-import {viewTabs, viewActive} from '../../build/d3-view-components';
+import {viewTabs, viewActive} from '../../index';
 
 
 describe('viewTabs -', () => {

@@ -1,7 +1,8 @@
 import {view} from 'd3-view';
+import {render} from 'd3-view-test';
 
-import {test, getWaiter} from '../../dev/utils.js';
-import {viewFlatpickr} from '../../build/d3-view-components';
+import {getWaiter} from '../../dev/utils.js';
+import {viewFlatpickr} from '../../index';
 
 
 describe('Flatpickr -', () => {
@@ -26,11 +27,10 @@ describe('Flatpickr -', () => {
     });
 
     test ('simple', async () => {
-        var el = vm.select('body').append('div').html('<input type="text" d3-flatpickr>');
-        await vm.mount(el);
+        const d = await render('<input type="text" d3-flatpickr>', vm);
         var opts = await waiter.promise;
         expect(opts).toEqual({});
-        var dir = vm.sel.select('input').directives().all[0];
+        var dir = d.select('input').directives().all[0];
         expect(dir.fp).toBeTruthy();
         waiter = getWaiter();
         vm.sel.remove();

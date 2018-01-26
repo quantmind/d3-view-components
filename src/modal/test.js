@@ -1,8 +1,8 @@
 import {view} from 'd3-view';
 import {isFunction} from 'd3-let';
+import {render, nextTick} from 'd3-view-test';
 
-import {test, nextTick} from '../../dev/utils.js';
-import {viewModal} from '../../build/d3-view-components';
+import {viewModal} from '../../index';
 
 
 describe('viewMarked -', () => {
@@ -16,8 +16,8 @@ describe('viewMarked -', () => {
     test ('simple', async () => {
         expect(isFunction(vm.model.$openModal)).toBe(true);
         expect(vm.model.$openModal).toBe(viewModal.modalOpen);
-        await vm.mount(vm.createElement('div'));
-        expect(vm.model.$openModal).toBe(viewModal.modalOpen);
+        const d = await render('<div/>', vm);
+        expect(d.view.model.$openModal).toBe(viewModal.modalOpen);
         vm.model.$openModal({
             title: "test",
             body: "this is a test for the modal"

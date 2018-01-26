@@ -1,7 +1,6 @@
 import {view} from 'd3-view';
 
-import {test} from '../../dev/utils.js';
-import {viewMarked} from '../../build/d3-view-components';
+import {viewMarked} from '../../index';
 
 
 describe('viewMarked -', () => {

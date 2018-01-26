@@ -1,6 +1,7 @@
 import {view} from 'd3-view';
+import {render} from 'd3-view-test';
 
-import {test, getWaiter} from '../../dev/utils.js';
+import {getWaiter} from '../../dev/utils.js';
 import {viewActive} from '../../build/d3-view-components';
 
 
@@ -24,11 +25,8 @@ describe('viewActive -', () => {
 
     test ('currentUrl', async () => {
         expect(vm).toBeTruthy();
-        var el = vm.select('body').append('div').html('<a href="/foo" d3-active>foo link</a>');
-        await vm.mount(el);
-        vm.sel.remove();
-        var dir = await waiter.promise;
-        expect(dir.name).toBe('d3-active');
+        const d = await render('<div><a href="/foo" d3-active>foo link</a></div>', vm);
+        expect(d.view).toBe(vm);
     });
 
 });
