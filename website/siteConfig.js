@@ -1,10 +1,13 @@
 
 
 module.exports = {
-    title: "d3-view - d3 plugin for building interactive data-driven web interfaces",
-    github: "quantmind/d3-view",
+    title: "Components for d3-view",
+    github: "quantmind/d3-view-components",
     algolia: {
         apiKey: process.env.ALGOLIA_API_KEY
+    },
+    google: {
+        analytics: "UA-110136266-2"
     },
     markdown: {
         paths: [

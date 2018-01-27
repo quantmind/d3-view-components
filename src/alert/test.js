@@ -1,6 +1,6 @@
 import {view} from 'd3-view';
 import {isFunction} from 'd3-let';
-import {render, nextTick} from 'd3-view-test';
+import {render} from 'd3-view-test';
 
 import {viewAlert} from '../../index';
 
@@ -25,7 +25,7 @@ describe('Alert -', () => {
         vm.model.$alertMessage('Hi!');
         //
         expect(alerts.messages.length).toBe(1);
-        await nextTick();
+        await d.nextTick();
         //
         var elements = vm.sel.selectAll('.alert');
         expect(elements.size()).toBe(1);
@@ -33,7 +33,8 @@ describe('Alert -', () => {
         //
         elements = vm.sel.selectAll('.alert');
         expect(elements.size()).toBe(1);
-        await nextTick();
+        expect(elements.directives()).toBeTruthy();
+        await d.nextTick();
         elements = vm.sel.selectAll('.alert');
         expect(elements.size()).toBe(2);
     });
@@ -43,15 +44,19 @@ describe('Alert -', () => {
         d.view.model.$alertMessage('Hi!');
         var alerts = vm.sel.select('.alert-messages').model();
         expect(alerts.messages.length).toBe(1);
-        await nextTick();
-        let elements = vm.sel.selectAll('.alert');
+        let elements = d.selectAll('.alert');
+        expect(elements.size()).toBe(0);
+        await d.nextTick();
+        elements = d.selectAll('.alert');
         expect(elements.size()).toBe(1);
-        d.view.model.$alertMessage({message: 'warning message', level: 'warn'});
         //
         // close it
-        d.click('button');
-        await nextTick();
-        elements = vm.sel.selectAll('.alert');
+        const btn = d.select('button.close');
+        expect(btn.size()).toBe(1);
+        const uid = btn.directives().all[0].uid;
+        const events = btn.on(`click.${uid}`);
+        d.click('button.close');
+        elements = d.selectAll('.alert');
         expect(elements.size()).toBe(0);
     });
 });

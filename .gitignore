@@ -9,4 +9,5 @@ node_modules
 router/navigo.js
 
 # IDEs
+.idea
 *.sublime-workspace

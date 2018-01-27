@@ -40,7 +40,7 @@ export default {
         };
     },
 
-    render (props) {
+    render () {
 
         var model = this.model,
             messages = model.messages.splice(0),
@@ -70,7 +70,7 @@ export default {
             }
         }
 
-        return this.viewElement(tpl, props);
+        return tpl;
     }
 };
 

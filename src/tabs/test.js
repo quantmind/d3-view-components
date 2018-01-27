@@ -1,4 +1,5 @@
 import {view} from 'd3-view';
+import {render} from 'd3-view-test';
 
 import {viewTabs, viewActive} from '../../index';
 
@@ -19,7 +20,8 @@ describe('viewTabs -', () => {
     });
 
     test ('simple', async () => {
-        await vm.mount(vm.viewElement(`<div><tabs data-tab-items='["one", "two"]'></tabs></div>`));
+        const d = await render(`<tabs data-tab-items='["one", "two"]'></tabs>`, vm);
+        expect(d.view).toBe(vm);
     });
 
 });
