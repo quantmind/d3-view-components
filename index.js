@@ -5,7 +5,7 @@ export {default as viewAutocomplete} from './src/autocomplete/index';
 export {default as viewCard} from './src/card/index';
 export {default as viewCollapse} from './src/collapse/index';
 export {default as viewFlatpickr} from './src/flatpickr/index';
-export {default as viewMarked} from './src/marked/index';
+export {default as viewMarked} from './src/markdown/index';
 export {default as viewModal} from './src/modal/index';
 export {default as viewSidebar} from './src/sidebar/index';
 export {default as viewTabs} from './src/tabs/index';

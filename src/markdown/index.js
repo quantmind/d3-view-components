@@ -26,7 +26,7 @@ export default {
             if (props.source)
                 return this.fetchText(props.source).then(response => build(response.data));
             else
-                return build(this.select(el).text());
+                return build(this.select(el).html());
 
         });
 

@@ -3,8 +3,10 @@ node_modules
 /build
 /dist
 /site
+/website/static
 
 # files
+nav.json
 .DS_Store
 router/navigo.js
 

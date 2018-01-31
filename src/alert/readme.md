@@ -11,13 +11,13 @@ Same messages with same level are not repeated, instead a counter is added.
             <alerts data-transition-duration=250></alerts>
         </div>
         <div class="col-sm-6">
-            <d3form data-schema='/alert/form-example.json'></d3form>
+            <d3form data-schema='alert/form-example.json'></d3form>
         </div>
     </div>
 </div>
 <br><br>
 
-This example is created with the below markup and the [/alert/form-example.json](/alert/form-example.json) form schema.
+This example is created with the below markup and the [form-example.json](alert/form-example.json) form schema.
 ```html
 <div class="container-float">
     <div class="row">
@@ -25,7 +25,7 @@ This example is created with the below markup and the [/alert/form-example.json]
             <alerts data-transition-duration=250></alerts>
         </div>
         <div class="col-sm-6">
-            <d3form data-schema='/alert/form-example.json'></d3form>
+            <d3form data-schema='alert/form-example.json'></d3form>
         </div>
     </div>
 </div>
@@ -40,7 +40,7 @@ import {viewAlert} from 'd3-view-components';
 
 var vm = view({
     components: {
-        alerts: viewAlert
+        alerts: viewAlert,
         ...
     }
 });
@@ -69,11 +69,11 @@ model.$emit('alertMessage', 'Hi!');
 To display messages with different levels:
 ```javascript
 model.$emit('alertMessage', {
-    message: '<strong>Warning!></strong> This is a wrning message'
+    message: '<strong>Warning!</strong> This is a wrning message'
     level: 'warning'
 });
 model.$emit('alertMessage', {
-    message: '<strong>Danger!></strong> Something very wrong'
+    message: '<strong>Danger!</strong> Something very wrong'
     level: 'danger'
 });
 

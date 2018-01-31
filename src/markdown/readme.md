@@ -1,19 +1,19 @@
-## Marked Directive
+## Markdown Component
 
-The ``viewMarked`` directive can be used to render markdown into the hosting element.
-The directive asynchrnously requires two libraries:
+The ``viewMarked`` component can be used to render markdown into the hosting element.
+The component asynchrnously requires two libraries:
 
 * [marked][] for rendering markdown
 * [highlightjs][] for syntax highlighting
 
-To use the directive, make sure it is included in the view constructor:
+To use the component, make sure it is included in the view constructor:
 ```javascript
 import {view} from 'd3-view';
 import {viewMarked} from 'd3-view-components';
 
 var vm = view({
-    directives: {
-        marked: viewMarked
+    components: {
+        markdown: viewMarked
     }
 });
 ```

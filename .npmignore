@@ -3,6 +3,7 @@
 .ci
 *.log
 *.lock
+nav.json
 rollup.config.js
 .eslintrc
 .gitignore

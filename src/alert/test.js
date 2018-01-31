@@ -1,8 +1,10 @@
 import {view} from 'd3-view';
 import {isFunction} from 'd3-let';
-import {render} from 'd3-view-test';
+import {render, validateHTML} from 'd3-view-test';
 
 import {viewAlert} from '../../index';
+
+import tpl from './template.html';
 
 
 describe('Alert -', () => {
@@ -15,6 +17,10 @@ describe('Alert -', () => {
                 alerts: viewAlert
             }
         });
+    });
+
+    test('template', () => {
+        expect(validateHTML(tpl)).toBe(true);
     });
 
     test ('simple', async () => {

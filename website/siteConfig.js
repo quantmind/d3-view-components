@@ -7,7 +7,7 @@ module.exports = {
         apiKey: process.env.ALGOLIA_API_KEY
     },
     google: {
-        analytics: "UA-110136266-2"
+        analyticsId: "UA-110136266-2"
     },
     markdown: {
         paths: [
@@ -21,8 +21,15 @@ module.exports = {
             },
             {
                 slug: "",
-                path: "/",
-                template: "topnav"
+                index: "index",
+                path: "site",
+                template: "topnav",
+                navbarRightNav: [
+                    {
+                        name: "docs",
+                        href: "/docs"
+                    }
+                ]
             }
         ],
         plugins: {
