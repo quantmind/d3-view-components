@@ -20,6 +20,10 @@
     ],
     "coveragePathIgnorePatterns": [
     ],
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+        "\\.(css|scss)$": "<rootDir>/dev/jest-empty.js"
+    },
     "transform": {
         "^.+\\.js$": "babel-jest",
         "^.+\\.html$": "<rootDir>/dev/string"

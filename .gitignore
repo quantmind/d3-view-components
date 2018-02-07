@@ -6,6 +6,7 @@ node_modules
 /website/static
 
 # files
+*.log
 nav.json
 .DS_Store
 router/navigo.js

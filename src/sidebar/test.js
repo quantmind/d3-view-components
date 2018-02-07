@@ -1,7 +1,7 @@
 import {view} from 'd3-view';
 import {render} from 'd3-view-test';
 
-import {viewSidebar, viewCollapse} from '../../index';
+import {viewSidebar} from '../../index';
 
 
 describe('sidebar -', () => {
@@ -12,9 +12,6 @@ describe('sidebar -', () => {
         vm = view({
             components: {
                 sidebar: viewSidebar
-            },
-            directives: {
-                collapse: viewCollapse
             }
         });
     });

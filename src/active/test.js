@@ -1,11 +1,10 @@
 import {view} from 'd3-view';
-import {render} from 'd3-view-test';
+import {render, getWaiter} from 'd3-view-test';
 
-import {getWaiter} from '../../dev/utils.js';
 import {viewActive} from '../../build/d3-view-components';
 
 
-describe('viewActive -', () => {
+describe('viewActive', () => {
 
     let vm, waiter;
 

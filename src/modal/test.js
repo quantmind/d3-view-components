@@ -5,7 +5,7 @@ import {render, nextTick} from 'd3-view-test';
 import {viewModal} from '../../index';
 
 
-describe('viewMarked -', () => {
+describe('viewModal', () => {
 
     let vm;
 

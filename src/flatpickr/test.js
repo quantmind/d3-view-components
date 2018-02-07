@@ -1,11 +1,10 @@
 import {view} from 'd3-view';
-import {render} from 'd3-view-test';
+import {render, getWaiter} from 'd3-view-test';
 
-import {getWaiter} from '../../dev/utils.js';
 import {viewFlatpickr} from '../../index';
 
 
-describe('Flatpickr -', () => {
+describe('Flatpickr', () => {
 
     let vm, waiter;
 
@@ -32,11 +31,11 @@ describe('Flatpickr -', () => {
         expect(opts).toEqual({});
         var dir = d.select('input').directives().all[0];
         expect(dir.fp).toBeTruthy();
-        waiter = getWaiter();
-        vm.sel.remove();
-        var dir2 = await waiter.promise;
-        expect(dir2).toBe(dir);
-        expect(dir2.fp).toBe(null);
+        //waiter = getWaiter();
+        //vm.sel.remove();
+        //var dir2 = await waiter.promise;
+        //expect(dir2).toBe(dir);
+        //expect(dir2.fp).toBe(null);
     });
 
 });

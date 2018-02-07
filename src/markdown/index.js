@@ -5,19 +5,18 @@ export default {
 
     props: {
         source: null,
-        anchorIcon: 'ion-ios-grid-view-outline'
+        anchorIcon: 'link'
     },
 
     render (props, attrs, el) {
         const
             self = this,
-            r = this.providers.require,
             classes = attrs.class || 'markdown';
 
         let marked, hl;
 
 
-        return Promise.all([r('marked'), r('highlightjs')]).then(libs => {
+        return Promise.all([this.require('marked'), this.require('highlightjs')]).then(libs => {
             [marked, hl] = libs;
 
             if (!self._markedOptions)

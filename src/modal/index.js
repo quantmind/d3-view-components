@@ -1,11 +1,7 @@
 import {easeExpOut} from 'd3-ease';
 import {isString} from 'd3-let';
-import {viewWarn, viewBase} from 'd3-view';
 
 import tpl from './template.html';
-
-
-const select = viewBase.select;
 
 
 const modalComponent = {
@@ -97,30 +93,30 @@ export default {
 
 // function for opening a modal
 // inject this method to the root model
-function modalOpen (options) {
-    if (isString(options)) options = optionsFromTarget(options);
-    var modal = select('#d3-view-modal');
-    if (!modal.size())
-        select('body').append('modal').mount(options, vm => vm.model.$showModal());
-    else
-        modal.model().$update(options).$showModal();
-}
+const modalOpen = (vm) => {
+
+    return options => {
+        if (isString(options)) options = optionsFromTarget(vm, options);
+        var modal = vm.select('#d3-view-modal');
+        if (!modal.size())
+            vm.select('body').append('modal').mount(options).then(cm => cm.model.$showModal());
+        else
+            modal.model().$update(options).$showModal();
+    };
+};
 
 
-function optionsFromTarget (selector) {
-    var sel = select(selector);
+const optionsFromTarget = (vm, selector) => {
+    var sel = vm.select(selector);
     if (sel.size() === 1) {
         return {
             modalTitle: textFromTarget(sel.select('modal-title')),
             modalBody: textFromTarget(sel.select('modal-body'))
         };
     } else {
-        viewWarn(`Could not obtain target from selector "${selector}"`);
+        vm.logWarn(`Could not obtain target from selector "${selector}"`);
         return {};
     }
-}
+};
 
-function textFromTarget (sel) {
-    if (sel.size()) return sel.html();
-    return '';
-}
+const textFromTarget = sel => sel.size() ? sel.html() : '';
