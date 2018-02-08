@@ -1,6 +1,5 @@
 const json = require('rollup-plugin-json');
 const string = require('rollup-plugin-string');
-const sass = require('rollup-plugin-sass');
 const sourcemaps = require('rollup-plugin-sourcemaps');
 
 
@@ -26,13 +25,6 @@ module.exports = {
         json(),
         string({
             include: 'src/**/*.html'
-        }),
-        sass({
-            output: 'build/d3-view-components.css',
-            options: {
-                includePaths: ['node_modules'],
-                outputStyle: 'compressed'
-            }
         }),
         sourcemaps()
     ]

@@ -14,17 +14,21 @@ const icons = {
 };
 
 
-const icon = {
+//
+//  Icon component
+export const icon = {
     props: {
-        name: null
+        name: null,
+        src: null
     },
 
     render (props) {
         const name = props.name || icons.default;
+        const src = props.src ? props.src : icons.src(name);
         if (!name) return '<i/>';
         return this.createElement('img')
             .attr('alt', name)
-            .attr('src', icons.src(name));
+            .attr('src', src);
     }
 };
 

@@ -1,5 +1,3 @@
-import './index.scss';
-
 export {version as viewComponentsVersion} from './package.json';
 export {default as viewActive} from './src/active/index';
 export {default as viewAlert} from './src/alert/index';

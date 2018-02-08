@@ -1,6 +1,8 @@
 import {viewModel} from 'd3-view';
 
 import collapse from '../collapse/index';
+import {icon} from '../icons/index';
+
 import tpl from './template.html';
 import groupTpl from './group.html';
 
@@ -21,7 +23,7 @@ const group = {
 //  * active directive (Optional)
 //
 export default {
-    components: {group},
+    components: {group, icon},
     directives: {collapse},
 
     props: {
@@ -35,7 +37,7 @@ export default {
     model: {
         primaryItems: [],
         secondaryItems: [],
-        sidebarToggle: '<i class="ion-android-menu"></i>',
+        sidebarToggle: '<icon data-name="menu"></icon>',
         // sidebar
         sectionCollapse: false,  //  allow sections in sidebar to be collapsible
         // top navbar attributes

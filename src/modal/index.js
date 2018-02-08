@@ -78,19 +78,6 @@ const modalDirective = {
 };
 
 
-export default {
-    modalComponent,
-    modalDirective,
-    modalOpen,
-
-    install (vm) {
-        vm.addComponent('modal', modalComponent);
-        vm.addDirective('modal', modalDirective);
-        vm.model.$openModal = modalOpen;
-    }
-};
-
-
 // function for opening a modal
 // inject this method to the root model
 const modalOpen = (vm) => {
@@ -104,6 +91,22 @@ const modalOpen = (vm) => {
             modal.model().$update(options).$showModal();
     };
 };
+
+
+const viewModal = {
+    modalComponent,
+    modalDirective,
+    modalOpen,
+
+    install (vm) {
+        vm.addComponent('modal', viewModal.modalComponent);
+        vm.addDirective('modal', viewModal.modalDirective);
+        vm.model.$openModal = viewModal.modalOpen;
+    }
+};
+
+
+export default viewModal;
 
 
 const optionsFromTarget = (vm, selector) => {
