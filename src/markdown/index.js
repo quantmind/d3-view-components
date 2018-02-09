@@ -1,7 +1,10 @@
 import {viewSlugify} from 'd3-view';
 
+import {icon} from '../icons/index';
+
 
 export default {
+    components: {icon},
 
     props: {
         source: null,
@@ -9,35 +12,26 @@ export default {
     },
 
     render (props, attrs, el) {
+        let marked, hl, markedOptions;
+
         const
-            self = this,
-            classes = attrs.class || 'markdown';
-
-        let marked, hl;
-
+            classes = attrs.class || 'markdown',
+            compile = source => {
+                source = source ? marked(source, markedOptions) : '';
+                return this.createElement('div').attr('class', classes).html(source);
+            };
 
         return Promise.all([this.require('marked'), this.require('highlightjs')]).then(libs => {
             [marked, hl] = libs;
-
-            if (!self._markedOptions)
-                self._markedOptions = self.markedOptions(props, marked, hl);
-
+            markedOptions = this.markedOptions(props, marked, hl);
             if (props.source)
-                return this.fetchText(props.source).then(response => build(response.data));
+                return this.fetchText(props.source).then(response => compile(response.data));
             else
-                return build(this.select(el).html());
-
+                return compile(this.select(el).html());
         });
-
-
-        function build (source) {
-            source = source ? marked(source, self._markedOptions) : '';
-            return self.createElement('div').attr('class', classes).html(source);
-        }
     },
 
     markedOptions (props, marked, hl) {
-        if (this._markedOptions) return self._markedOptions;
         var renderer = new marked.Renderer(),
             icon = props.anchorIcon;
 
@@ -51,7 +45,13 @@ export default {
 
         function heading (text, level) {
             var id = viewSlugify(text);
-            return `<h${level}><a href="#${id}" aria-hidden="true" class="anchor" id="content-${id}"><i class="${icon}"></i></a> ${text}</h${level}>`;
+            return (`<h${level}>
+                <a href="#${id}" aria-hidden="true" class="anchor" id="content-${id}">
+                <icon name="${icon}"></icon>
+                </a>
+                ${text}
+                </h${level}>
+            `);
         }
 
         function highlight (code, lang) {

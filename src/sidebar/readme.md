@@ -2,14 +2,11 @@
 
 Usage:
 ```javascript
-import {viewSidebar, viewCollapse} from 'd3-view-component';
+import {viewSidebar} from 'd3-view-component';
 
 vm = view({
     components: {
         sidebar: viewSidebar
-    },
-    directives: {
-        collapse: viewCollapse
     }
 });
 ```

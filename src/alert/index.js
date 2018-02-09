@@ -9,6 +9,9 @@ const levels = {
 };
 
 
+const messageKey = msg => `${msg.level}::${msg.message}`;
+
+
 // component render function
 export default {
 
@@ -73,8 +76,3 @@ export default {
         return tpl;
     }
 };
-
-
-function messageKey (msg) {
-    return `${msg.level}::${msg.message}`;
-}

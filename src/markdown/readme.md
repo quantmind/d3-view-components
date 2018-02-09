@@ -22,7 +22,11 @@ The directive is used throughout this site to render markdown form the [d3-view-
 
 Simple usage:
 ```html
-<div class="docs" d3-marked="docs"></div>
+<markdown>
+## Markdown component
+
+This is the markdown component!
+</markdown>
 ```
 
 

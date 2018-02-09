@@ -38,7 +38,7 @@ export default {
 };
 
 //
-// Make sure the currentUrl attribute is reactive
+// Make sure the currentUrl attribute is a reactive atttribute
 viewEvents.on('component-mount', vm => {
     if (!vm.parent) vm.model.currentUrl = vm.ownerDocument.location.href;
 });

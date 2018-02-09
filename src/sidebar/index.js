@@ -34,22 +34,18 @@ export default {
         itemAttr: ''
     },
 
-    model: {
-        primaryItems: [],
-        secondaryItems: [],
-        sidebarToggle: '<icon data-name="menu"></icon>',
-        // sidebar
-        sectionCollapse: false,  //  allow sections in sidebar to be collapsible
-        // top navbar attributes
-        navbarItems: [],
-        navbarTitle: "",
-        navbarTitleUrl: "/",
-        // collapse action
-        $collapse () {
-            var collapse = this.$event ? this.$event.currentTarget.d3Collapse : null;
-            if (collapse)
-                collapse.hide(collapse.select(this.$event.currentTarget));
-        }
+    model() {
+        return {
+            primaryItems: [],
+            secondaryItems: [],
+            sidebarToggle: '<icon data-name="menu"></icon>',
+            // sidebar
+            sectionCollapse: false,  //  allow sections in sidebar to be collapsible
+            // top navbar attributes
+            navbarItems: [],
+            navbarTitle: "",
+            navbarTitleUrl: "/"
+        };
     },
 
     render (props, attrs, el) {
@@ -63,7 +59,7 @@ export default {
 };
 
 
-function asItems (model, items) {
+const asItems = (model, items) => {
     let item;
     for (let i=0; i<items.length; ++i) {
         item = items[i];
@@ -76,4 +72,4 @@ function asItems (model, items) {
         if (!item.items) item.items = [];
         items[i] = item;
     }
-}
+};
