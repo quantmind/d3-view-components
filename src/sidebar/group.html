@@ -5,7 +5,7 @@
   </a>
   <ul class="list-group" d3-if="item.items">
     <li class="list-group-entry" d3-for="entry in item.items">
-      <a class="list-group-item list-group-item-action" d3-attr-href="entry.href" d3-link>
+      <a class="list-group-item list-group-item-action" d3-attr-href="entry.href" d3-link d3-active>
         <icon d3-prop-name="entry.icon"></icon>
         <span d3-html="entry.label || entry.name"></span>
       </a>

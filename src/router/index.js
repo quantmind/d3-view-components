@@ -42,7 +42,7 @@ export default {
         });
 
         // Add router to all components which are part of the vm view
-        viewEvents.on('component-mount', cm => {
+        viewEvents.on('component-mount.router', cm => {
             if (cm.root === vm) cm.router = router;
         });
 

@@ -1,5 +1,6 @@
 import {viewModel} from 'd3-view';
 
+import active from '../active/index';
 import collapse from '../collapse/index';
 import {icon} from '../icons/index';
 
@@ -24,7 +25,7 @@ const group = {
 //
 export default {
     components: {group, icon},
-    directives: {collapse},
+    directives: {active, collapse},
 
     props: {
         id: 'sidebar',
