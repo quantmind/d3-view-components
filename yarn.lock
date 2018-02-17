@@ -1230,14 +1230,14 @@ d3-transition@1.1:
     d3-selection "^1.1.0"
     d3-timer "1"
 
-d3-view-test@0.2:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/d3-view-test/-/d3-view-test-0.2.0.tgz#72900d0cd4356d6aedd422996a2cf62342c74f82"
+d3-view-test@0.3:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/d3-view-test/-/d3-view-test-0.3.0.tgz#ec6bf680c66df3a47588c6792c5e3a9fa652170f"
   dependencies:
-    d3-view "1.3"
+    d3-view "^1.3.3"
     jsdom "11.6"
 
-d3-view@1.3, d3-view@^1.3.2:
+d3-view@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/d3-view/-/d3-view-1.3.3.tgz#90704e7d0178536ba0956c7d595c462601c856bd"
   dependencies:
@@ -1424,9 +1424,9 @@ eslint-visitor-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
 
-eslint@4.17:
-  version "4.17.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.17.0.tgz#dc24bb51ede48df629be7031c71d9dc0ee4f3ddf"
+eslint@4.18:
+  version "4.18.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.18.0.tgz#ebd0ba795af6dc59aa5cee17938160af5950e051"
   dependencies:
     ajv "^5.3.0"
     babel-code-frame "^6.22.0"
@@ -1655,9 +1655,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flatpickr@4.2:
-  version "4.2.4"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.2.4.tgz#abd6dedd0fa41e2118acb96a22f49819ba2d0157"
+flatpickr@4.3:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.3.2.tgz#6a477043c075ef36c3ff54fadb49b936a64d635f"
 
 for-in@^1.0.1:
   version "1.0.2"
@@ -2996,9 +2996,9 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
-navigo@7.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/navigo/-/navigo-7.0.0.tgz#f8f05aefc13a4e1a15a2748433cff8b9b0558a0b"
+navigo@7.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/navigo/-/navigo-7.1.1.tgz#c7e3eb4398125769f3bc6b7c924d8139da466038"
 
 node-gyp@^3.3.1, node-gyp@~3.6.0:
   version "3.6.2"
@@ -4010,9 +4010,9 @@ rollup-watch@4.3:
     require-relative "0.8.7"
     rollup-pluginutils "^2.0.1"
 
-rollup@0.55:
-  version "0.55.3"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.55.3.tgz#0af082a766d51c3058430c8372442ff5207d8736"
+rollup@0.56:
+  version "0.56.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.56.1.tgz#87dd6295103da48c2376872836273785ffe0def3"
 
 run-async@^2.2.0:
   version "2.3.0"
