@@ -1,6 +1,7 @@
 import {isAbsoluteUrl} from 'd3-view';
 
-
+//
+//  Directive for navigating
 export default {
 
     mount (model) {

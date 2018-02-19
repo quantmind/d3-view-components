@@ -1,9 +1,11 @@
 {
     "scripts": {
         "js": "webpack --config webpack.config.js",
+        "js:dev": "webpack --config webpack.config.js -w",
         "css": "node-sass src/index.scss static/site.css --include-path node_modules --output-style compressed",
-        "build": "npm run-script js && npm run-script css",
-        "serve": "nodemon ./node_modules/.bin/d3fluid --debug"
+        "css:dev": "node-sass src/index.scss static/site.css --include-path node_modules -w",
+        "prepare": "npm run-script js && npm run-script css",
+        "serve": "d3fluid --debug"
     },
     "dependencies": {
         "d3-fluid": "0.2",
@@ -17,6 +19,7 @@
         "bootstrap": "4.0.0-beta.3",
         "node-sass": "4.7",
         "nodemon": "1.14",
+        "raw-loader": "0.5",
         "webpack": "3.10"
     }
 }

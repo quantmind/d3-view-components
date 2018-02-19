@@ -9,6 +9,9 @@ const levels = {
 };
 
 
+const messageKey = msg => `${msg.level}::${msg.message}`;
+
+
 // component render function
 export default {
 
@@ -40,7 +43,7 @@ export default {
         };
     },
 
-    render (props) {
+    render () {
 
         var model = this.model,
             messages = model.messages.splice(0),
@@ -70,11 +73,6 @@ export default {
             }
         }
 
-        return this.viewElement(tpl, props);
+        return tpl;
     }
 };
-
-
-function messageKey (msg) {
-    return `${msg.level}::${msg.message}`;
-}

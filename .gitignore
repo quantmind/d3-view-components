@@ -3,10 +3,15 @@ node_modules
 /build
 /dist
 /site
+/website/static
 
 # files
+*.log
+nav.json
 .DS_Store
-router/navigo.js
+src/router/navigo.js
+src/icons/icons.json
 
 # IDEs
+.idea
 *.sublime-workspace

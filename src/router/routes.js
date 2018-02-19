@@ -5,10 +5,10 @@ const route = {
         component: null
     },
 
-    render (props) {
+    render () {
         var router = this.router,
-            path = props.path,
-            component = props.component;
+            path = this.props.path,
+            component = this.props.component;
 
         if (!component) {
             this.logWarn('route component requires a component attribute to be specified');

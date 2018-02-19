@@ -1,0 +1,39 @@
+{
+    "rootDir": "../",
+    "roots": [
+        "<rootDir>"
+    ],
+    "collectCoverage": true,
+    "coverageDirectory": "<rootDir>/build/coverage",
+    "coverageReporters": [
+        "json",
+        "html",
+        "lcov",
+        "text",
+        "text-summary"
+    ],
+    "collectCoverageFrom": [
+        "src/**/*.js"
+    ],
+    "testMatch": [
+        "<rootDir>/src/**/test.js"
+    ],
+    "coveragePathIgnorePatterns": [
+    ],
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+        "\\.(css|scss)$": "<rootDir>/dev/jest-empty.js"
+    },
+    "transform": {
+        "^.+\\.js$": "babel-jest",
+        "^.+\\.html$": "<rootDir>/dev/string"
+    },
+    "coverageThreshold": {
+        "global": {
+            "branches": 5,
+            "functions": 5,
+            "lines": 10,
+            "statements": 10
+        }
+    }
+}

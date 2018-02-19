@@ -1,15 +1,9 @@
 <div id="{{ id }}-container" class="sidebar">
   <div id="{{ id }}" class="sidebar-wrapper d-print-none width collapse show" data-container="padding-left">
-    <div class="list-group">
+    <ul class="list-group">
       <a class="sidebar-brand" href="{{ brandUrl }}">{{ brand }}</a>
-      <a d3-for="item in primaryItems"
-        class="list-group-item list-group-item-action"
-        d3-attr-href="item.href"
-        d3-link>
-        <i d3-class="item.icon" aria-hidden="true"></i>
-        <span d3-html="item.label || item.name"></span>
-      </a>
-    </div>
+      <group d3-for="item in primaryItems"></group>
+    </ul>
     <div class="list-group bottom">
       <a d3-for="item in secondaryItems"
         class='list-group-item list-group-item-action compact'
@@ -20,7 +14,7 @@
     </div>
   </div>
   <div class="content-wrapper">
-    <nav class="{{ classes }}">
+    <nav class="sidebar-navbar navbar {{ classes }}">
       <a class="navbar-toggler btn btn-default mr-2" href="#"
         aria-controls="{{ id }}"
         aria-expanded="true"

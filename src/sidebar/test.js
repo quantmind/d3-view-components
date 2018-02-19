@@ -1,7 +1,7 @@
 import {view} from 'd3-view';
+// import {render} from 'd3-view-test';
 
-import {test} from '../../dev/utils.js';
-import {viewSidebar, viewCollapse} from '../../build/d3-view-components';
+import {viewSidebar} from '../../index';
 
 
 describe('sidebar -', () => {
@@ -12,16 +12,14 @@ describe('sidebar -', () => {
         vm = view({
             components: {
                 sidebar: viewSidebar
-            },
-            directives: {
-                collapse: viewCollapse
             }
         });
     });
 
     test ('simple', async () => {
         expect(vm).toBeTruthy();
-        //await vm.mount(vm.viewElement('<div><sidebar></sidebar></div>'));
+        //const d = await render('<sidebar/>', vm);
+        ///expect(d.view).toBe(vm);
     });
 
 });

@@ -73,17 +73,13 @@
 
     .content-wrapper {
 
-        .main-wrapper {
+        .content-main {
     	    width: 100%;
     	    padding: $sidebar-padding;
     	}
 
     }
 
-}
-
-.sidebar-navbar {
-    background-color: $sidebar-navbar-background-color
 }
 
 // small screens
@@ -133,6 +129,10 @@
         a {
             color: $sidebar-ancor-color;
             text-decoration: none;
+        }
+
+        .navbar-toggler img {
+            height: $sidebar-navbar-toggler-height;
         }
     }
 }
