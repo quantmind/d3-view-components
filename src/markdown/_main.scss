@@ -11,17 +11,16 @@ markdown {
     margin-left: -20px;
     line-height: 1;
 
-    img {
+    .view-icon {
         vertical-align: middle;
         visibility: hidden;
-        color: $anchor-img-color;
     }
 }
 
 
 h1,h2,h3,h4,h5,h6 {
     &:hover {
-        .anchor img {
+        .anchor svg {
             visibility: visible;
         }
     }

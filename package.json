@@ -43,6 +43,7 @@
         "bootstrap": "4.0",
         "d3-view-test": "0.3",
         "eslint": "4.18",
+        "feather-icons": "4.5",
         "flatpickr": "4.3",
         "fs-extra": "5.0",
         "jest": "22",
@@ -56,16 +57,17 @@
         "rollup-plugin-node-resolve": "3.0",
         "rollup-plugin-sourcemaps": "0.4",
         "rollup-plugin-string": "2.0",
-        "rollup-watch": "4.3"
+        "rollup-watch": "4.3",
+        "sass-lint": "1.12"
     },
     "scripts": {
-        "lint": "eslint .",
+        "lint": "eslint . && sass-lint *.scss src/**/*.scss",
         "cleanup": "rm -rf build",
         "test": "npm run-script lint && npm run-script test:unit",
         "test:unit": "jest -c dev/jest.config.json --no-cache",
         "watch": "rollup -c dev/rollup.config.js -w",
         "debug:firefox": "karma start dev/karma.debug.firefox.js",
-        "prepare": "cp ./node_modules/navigo/lib/navigo.es.js src/router/navigo.js && rollup -c dev/rollup.config.js --banner \"$(preamble)\"",
+        "prepare": "cp ./node_modules/navigo/lib/navigo.es.js src/router/navigo.js && cp ./node_modules/feather-icons/dist/icons.json src/icons/icons.json && rollup -c dev/rollup.config.js --banner \"$(preamble)\"",
         "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git tag -am \"Release $VERSION.\" v${VERSION} && git push --tags",
         "release": "publish"
     }

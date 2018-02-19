@@ -82,10 +82,6 @@
 
 }
 
-.sidebar-navbar {
-    background-color: $sidebar-navbar-background-color
-}
-
 // small screens
 @media(max-width: $sidebar-small-screen-1) {
 
@@ -133,6 +129,10 @@
         a {
             color: $sidebar-ancor-color;
             text-decoration: none;
+        }
+
+        .navbar-toggler img {
+            height: $sidebar-navbar-toggler-height;
         }
     }
 }

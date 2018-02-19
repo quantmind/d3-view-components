@@ -9,7 +9,8 @@ node_modules
 *.log
 nav.json
 .DS_Store
-router/navigo.js
+src/router/navigo.js
+src/icons/icons.json
 
 # IDEs
 .idea

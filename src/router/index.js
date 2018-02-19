@@ -48,7 +48,7 @@ export default {
 
         // auto resolve
         if (config.autoResolve !== false)
-            vm.events.on('mounted', () => {
+            vm.events.on('mounted.router', () => {
                 vm.logDebug('Resolve route with router');
                 vm.router.resolve();
             });

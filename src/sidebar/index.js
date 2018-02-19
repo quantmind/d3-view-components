@@ -30,7 +30,7 @@ export default {
     props: {
         id: 'sidebar',
         brand: 'sidebar',
-        classes: 'navbar-sidebar navbar sticky-top navbar-dark bg-primary',
+        classes: 'sticky-top navbar-dark bg-primary',
         brandUrl: '/',
         itemAttr: ''
     },
